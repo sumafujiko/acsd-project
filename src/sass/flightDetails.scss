@@ -1,0 +1,47 @@
+.flight-trip-container {
+    display:flex;
+    flex-direction:column;
+    background-color: #f7f7f7;
+    margin-top: 2rem;
+    cursor: pointer;
+    padding:1rem;
+    &:hover {
+        filter: brightness(0.95);
+    }
+.price-par {
+    font-weight: 800;
+    text-align: center;
+    margin-bottom: 0;
+}
+
+    .inbound-outbound-par {
+        margin:0;
+    }
+    .flight-details-container {
+        display:flex;
+        align-items: start;
+        justify-content: space-around;
+        background-color: #888;
+    }
+
+    .flight-details-segment {
+        display:flex;
+        background-color: #999;
+        gap:1rem;
+        align-items: center;
+        width:100%;
+        justify-content: center;
+        border: 1px solid gray;
+
+        .airport-par {
+            font-weight: 700;
+        }
+
+      .time-par {
+        margin-top:-0.8rem;
+      }
+    }
+}
+
+
+

@@ -1,5 +1,9 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
+import parseFlight from "./parseFlight";
+import FlightDetails from "../../components/FlightDetails/FlightDetails";
+
+import "../../sass/flightDetails.scss";
 
 const API_KEY = process.env.REACT_APP_AMADEUS_API_KEY;
 const API_SECRET = process.env.REACT_APP_AMADEUS_API_SECRET;
@@ -34,7 +38,7 @@ const FlightPage = () => {
             signal: abortController.signal,
           }
         );
-        console.log(tokenResponse, "token response");
+
         if (!tokenResponse.data?.access_token) {
           throw new Error("No Access Token");
         }
@@ -55,7 +59,13 @@ const FlightPage = () => {
           }
         );
         console.log(response);
-        setData(response);
+        const data = response.data?.data;
+        if (!Array.isArray(data)) {
+          throw new Error("Parsing Error");
+        }
+        const formattedData = data.map((trip) => parseFlight(trip));
+        console.log(formattedData);
+        setData(formattedData);
       } catch (error) {
         console.log(error);
         setError(error);
@@ -74,7 +84,11 @@ const FlightPage = () => {
   return (
     <div>
       <p></p>
-      <div>{JSON.stringify(data)}</div>
+      <div className="container">
+        {data?.map((trip, index) => (
+          <FlightDetails flightDetail={trip} key={index} />
+        ))}
+      </div>
     </div>
   );
 };
