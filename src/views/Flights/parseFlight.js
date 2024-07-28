@@ -3,7 +3,7 @@ import { getNestedKeyValue } from "../../utils";
 const segmentParseKeys = {
   departureAirport: "departure.iataCode",
   arrivalAirport: "arrival.iataCode",
-  departureAt: "arrival.at",
+  departureAt: "departure.at",
   arrivalAt: "arrival.at",
   airline: "carrierCode",
 };
@@ -37,7 +37,7 @@ const parseFlight = (flightDetails) => {
   }
   // TODO Extract the same functionality as these repeat
   if (Array.isArray(returnItinerary?.segments)) {
-    const returnFlight = outboundItinerary.segments.map((segment) => {
+    const returnFlight = returnItinerary.segments.map((segment) => {
       const segmentObj = {};
       Object.entries(segmentParseKeys).forEach(
         ([key, value]) => (segmentObj[key] = getNestedKeyValue(segment, value))
