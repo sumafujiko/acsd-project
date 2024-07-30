@@ -41,3 +41,10 @@
     }
   }
 }
+
+// Using this for the h2 headings on LandingPage.js
+@mixin section-heading {
+  font-size: $spacing-xlarge;
+  text-align: left;
+  margin-bottom: $spacing-large;
+}

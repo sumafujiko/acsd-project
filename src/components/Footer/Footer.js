@@ -1,5 +1,5 @@
-import React from 'react';
-import '../../sass/navigation.scss';
+import React from "react";
+import "../../sass/navigation.scss";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -7,7 +7,7 @@ const Footer = () => {
   return (
     <footer className="footer">
       <div className="footer__container">
-        <p className="footer__copyright">© {currentYear} Your Travel Company</p>
+        <p className="footer__copyright">© {currentYear} Travel</p>
       </div>
     </footer>
   );
