@@ -1,0 +1,172 @@
+@import "./variables";
+@import "./mixins";
+
+.landing-page {
+  // Hero section styles
+  &__hero {
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
+    @include flex-center;
+    text-align: center;
+    color: $white;
+    position: relative;
+  }
+
+  &__hero-content {
+    padding: $spacing-large;
+    background-color: rgba($primary-color, 0.7);
+    border-radius: $border-radius;
+    max-width: 600px;
+    width: 90%;
+  }
+
+  // Search form styles
+  &__search {
+    @include flex-center;
+    margin-top: $spacing-medium;
+
+    input {
+      padding: $spacing-small;
+      font-size: 1rem;
+      border: none;
+      border-radius: $border-radius 0 0 $border-radius;
+      width: 70%;
+      max-width: 300px;
+    }
+
+    button {
+      padding: $spacing-small $spacing-medium;
+      font-size: 1rem;
+      border: none;
+      border-radius: 0 $border-radius $border-radius 0;
+      background-color: $accent-color;
+      color: $white;
+      cursor: pointer;
+    }
+  }
+
+  &__hero-credit {
+    @include image-credit;
+  }
+
+  // Destinations section styles
+  &__destinations {
+    padding: $spacing-xlarge 0;
+    background-color: $secondary-color;
+
+    h2 {
+      @include container;
+      text-align: left;
+      margin-bottom: $spacing-large;
+      color: $white;
+      font-size: $spacing-xlarge;
+    }
+  }
+
+  &__destinations-grid {
+    @include container;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+
+  &__destination-card {
+    background-color: $white;
+    border-radius: $border-radius;
+    box-shadow: 0 2px 4px rgba($primary-color, 0.1);
+    margin-bottom: $spacing-large;
+    width: calc(33.33% - #{$spacing-medium});
+    overflow: hidden;
+  }
+
+  &__destination-image {
+    position: relative;
+
+    img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+    }
+
+    .image-credit {
+      @include image-credit;
+      font-size: 0.6rem; // Slightly smaller for destination images (Paris, Tokyo, New York)
+    }
+  }
+
+  &__destination-content {
+    padding: $spacing-medium;
+
+    h3 {
+      margin-top: 0;
+      margin-bottom: $spacing-small;
+      color: $primary-color;
+    }
+
+    p {
+      margin-bottom: $spacing-small;
+      color: $primary-color;
+    }
+  }
+
+  // Why Choose Us section styles
+  &__why-us {
+    padding: $spacing-xlarge 0;
+    background-color: $background-color;
+    color: $primary-color;
+  }
+
+  &__why-us-content {
+    @include container;
+    text-align: left;
+
+    h2 {
+      text-align: left;
+      margin-bottom: $spacing-large;
+      font-size: $spacing-xlarge; 
+      color: $primary-color;
+    }
+
+    @mixin section-heading {
+      font-size: $spacing-xlarge;
+      text-align: left;
+      margin-bottom: $spacing-large;
+    }
+
+    ul {
+      list-style-type: none;
+      padding: 0;
+    }
+
+    li {
+      margin-bottom: $spacing-medium;
+      font-size: 1.1rem;
+    }
+  }
+}
+
+// Responsive adjustments
+@include responsive($breakpoint-mobile) {
+  .landing-page {
+    &__hero-content {
+      padding: $spacing-medium;
+    }
+
+    &__search {
+      input {
+        width: 60%;
+      }
+    }
+
+    &__destinations-grid {
+      @include flex-column;
+      align-items: center;
+    }
+
+    &__destination-card {
+      width: 100%;
+      margin-bottom: $spacing-large;
+    }
+  }
+}

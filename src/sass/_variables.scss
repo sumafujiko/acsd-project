@@ -1,0 +1,22 @@
+// Random colour pallete from https://colorhunt.co/
+// These are all subject to change of course, but this is what I have so far.
+
+// Colours (Variable names are not the best atm, will go back over these)
+$white: #ffffff; // Adding white for text on dark backgrounds
+$primary-color: #021526; // Dark blue
+$secondary-color: #03346E; // Medium blue
+$accent-color: #6EACDA; // Light blue
+$background-color: #E2E2B6; // Light yellow
+
+// Spacing
+$spacing-small: 0.5rem;
+$spacing-medium: 1rem;
+$spacing-large: 2rem;
+$spacing-xlarge: 4rem;
+
+// Breakpoints
+$breakpoint-mobile: 768px;
+
+// Additional variables
+$border-radius: 5px;
+$container-max-width: 1200px;
