@@ -1,0 +1,114 @@
+@import "./variables";
+@import "./mixins";
+
+.refinement-page {
+  background-color: $background-color;
+  min-height: 100vh;
+  padding: $spacing-large 0;
+
+  &__container {
+    @include container;
+    max-width: 800px;
+  }
+
+  &__title {
+    @include section-heading;
+    color: $primary-color;
+    margin-bottom: $spacing-xlarge;
+  }
+
+  &__form {
+    background-color: $white;
+    border-radius: $border-radius;
+    padding: $spacing-large;
+    box-shadow: 0 2px 10px rgba($primary-color, 0.1);
+
+    .form-group {
+      margin-bottom: $spacing-large;
+
+      label {
+        display: block;
+        margin-bottom: $spacing-small;
+        font-weight: bold;
+        color: $primary-color;
+      }
+
+      input,
+      select {
+        width: 100%;
+        padding: $spacing-small;
+        border: 1px solid $secondary-color;
+        border-radius: $border-radius;
+        font-size: 1rem;
+
+        &:focus {
+          outline: none;
+          border-color: $primary-color;
+        }
+      }
+    }
+
+    .input-with-icon {
+      position: relative;
+
+      .icon {
+        position: absolute;
+        right: $spacing-small;
+        top: 50%;
+        transform: translateY(-50%);
+        pointer-events: none;
+      }
+    }
+
+    .guest-inputs {
+      display: flex;
+      justify-content: space-between;
+
+      > div {
+        flex: 1;
+        margin-right: $spacing-small;
+
+        &:last-child {
+          margin-right: 0;
+        }
+
+        label {
+          font-size: 0.9rem;
+        }
+
+        input {
+          width: 100%;
+        }
+      }
+    }
+
+    .price-range-slider {
+      input[type="range"] {
+        width: 100%;
+      }
+    }
+
+    .search-button {
+      @include button-style;
+      width: 100%;
+      padding: $spacing-medium;
+      font-size: 1.1rem;
+      margin-top: $spacing-large;
+    }
+  }
+}
+
+@include responsive($breakpoint-tablet) {
+  .refinement-page {
+    &__form {
+      .guest-inputs {
+        flex-direction: column;
+
+        > div {
+          margin-right: 0;
+          margin-bottom: $spacing-small;
+        }
+      }
+    }
+  }
+}
