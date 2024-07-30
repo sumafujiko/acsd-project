@@ -25,7 +25,13 @@ const Home = () => {
 
   const handleSearch = (e) => {
     e.preventDefault();
-    navigate(`/results?city=${searchQuery}`);
+    // Navigate to refinement page with the search query
+    navigate("/refinement", { state: { location: searchQuery } });
+  };
+
+  const handleDirectRefinement = () => {
+    // Navigate directly to refinement page without a search query
+    navigate("/refinement");
   };
 
   return (
@@ -51,7 +57,7 @@ const Home = () => {
         </div>
         {/* Hero image credit */}
         <div className="landing-page__hero-credit">
-          Image by Christo Anestev from Pixabay {/* Got rid of the credit links because I dont know how to do effectively do it from extracting destinationData :(( */}
+          Image by Christo Anestev from Pixabay
         </div>
       </section>
 

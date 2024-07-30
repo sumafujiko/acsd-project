@@ -2,7 +2,7 @@
 @import "./mixins";
 
 .refinement-page {
-  background-color: $background-color;
+  background-color: $secondary-color;
   min-height: 100vh;
   padding: $spacing-large 0;
 
@@ -13,7 +13,7 @@
 
   &__title {
     @include section-heading;
-    color: $primary-color;
+    color: $white;
     margin-bottom: $spacing-xlarge;
   }
 
@@ -89,26 +89,10 @@
     }
 
     .search-button {
-      @include button-style;
       width: 100%;
       padding: $spacing-medium;
       font-size: 1.1rem;
       margin-top: $spacing-large;
-    }
-  }
-}
-
-@include responsive($breakpoint-tablet) {
-  .refinement-page {
-    &__form {
-      .guest-inputs {
-        flex-direction: column;
-
-        > div {
-          margin-right: 0;
-          margin-bottom: $spacing-small;
-        }
-      }
     }
   }
 }
