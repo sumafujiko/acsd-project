@@ -2,52 +2,76 @@
 @import "./mixins";
 
 .landing-page {
-  // Hero section styles
+  overflow-x: hidden; // Prevent horizontal scrolling, this was happening when the browser was resized
+
   &__hero {
     background-size: cover;
     background-position: center;
     height: 100vh;
-    @include flex-center;
-    text-align: center;
-    color: $white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     position: relative;
   }
 
   &__hero-content {
-    padding: $spacing-large;
-    background-color: rgba($primary-color, 0.7);
-    border-radius: $border-radius;
-    max-width: 600px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
     width: 90%;
+    max-width: 1200px;
   }
 
-  // Search form styles
+  &__hero-slogan {
+    font-size: 5rem; // Increased size
+    color: $white;
+    margin-bottom: $spacing-xlarge;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  }
+
+  &__search-container {
+    width: 100%;
+    max-width: 800px;
+  }
+
   &__search {
-    @include flex-center;
-    margin-top: $spacing-medium;
+    display: flex;
+    width: 100%;
 
     input {
-      padding: $spacing-small;
-      font-size: 1rem;
+      flex-grow: 1;
+      padding: $spacing-medium;
+      font-size: 1.2rem;
       border: none;
       border-radius: $border-radius 0 0 $border-radius;
-      width: 70%;
-      max-width: 300px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     }
 
     button {
-      padding: $spacing-small $spacing-medium;
-      font-size: 1rem;
+      padding: $spacing-medium $spacing-large;
+      font-size: 1.2rem;
       border: none;
       border-radius: 0 $border-radius $border-radius 0;
       background-color: $accent-color;
       color: $white;
       cursor: pointer;
+      transition: background-color 0.3s ease;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+      &:hover {
+        background-color: darken($accent-color, 10%);
+      }
     }
   }
 
   &__hero-credit {
-    @include image-credit;
+    position: absolute;
+    bottom: $spacing-small;
+    right: $spacing-small;
+    font-size: 0.8rem;
+    color: $white;
+    opacity: 0.7;
   }
 
   // Destinations section styles
@@ -124,7 +148,7 @@
     h2 {
       text-align: left;
       margin-bottom: $spacing-large;
-      font-size: $spacing-xlarge; 
+      font-size: $spacing-xlarge;
       color: $primary-color;
     }
 
@@ -149,24 +173,22 @@
 // Responsive adjustments
 @include responsive($breakpoint-mobile) {
   .landing-page {
-    &__hero-content {
-      padding: $spacing-medium;
+    &__hero-slogan {
+      font-size: 3rem; // Smaller font size for mobile
+      margin-bottom: $spacing-large;
     }
 
     &__search {
+      flex-direction: column;
+
       input {
-        width: 60%;
+        border-radius: $border-radius $border-radius 0 0;
       }
-    }
 
-    &__destinations-grid {
-      @include flex-column;
-      align-items: center;
-    }
-
-    &__destination-card {
-      width: 100%;
-      margin-bottom: $spacing-large;
+      button {
+        border-radius: 0 0 $border-radius $border-radius;
+        margin-top: $spacing-small;
+      }
     }
   }
 }
