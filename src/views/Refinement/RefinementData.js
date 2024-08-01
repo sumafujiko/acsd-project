@@ -28,13 +28,6 @@ export const travelClasses = [
   { value: "first", label: "First Class" },
 ];
 
-// Sort options
-export const sortOptions = [
-  { value: "price", label: "Price" },
-  { value: "duration", label: "Duration" },
-  { value: "recommended", label: "Recommended" },
-];
-
 // Price range configuration
 export const priceRangeConfig = {
   min: 0,

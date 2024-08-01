@@ -4,31 +4,45 @@
 .refinement-page {
   background-color: $secondary-color;
   min-height: 100vh;
-  padding: $spacing-large 0;
+  padding: 2rem 0;
 
   &__container {
-    @include container;
     max-width: 800px;
+    margin: 0 auto;
+    padding: 0 1rem;
   }
 
   &__title {
-    @include section-heading;
     color: $white;
-    margin-bottom: $spacing-xlarge;
+    margin-bottom: 2rem;
+    font-size: 2rem;
   }
 
   &__form {
     background-color: $white;
-    border-radius: $border-radius;
-    padding: $spacing-large;
-    box-shadow: 0 2px 10px rgba($primary-color, 0.1);
+    border-radius: 8px;
+    padding: 2rem;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+
+    // Separate form into sections
+    .form-section {
+      margin-bottom: 2rem;
+      padding-bottom: 2rem;
+      border-bottom: 1px solid $secondary-color;
+
+      &:last-child {
+        border-bottom: none;
+        margin-bottom: 0;
+        padding-bottom: 0;
+      }
+    }
 
     .form-group {
-      margin-bottom: $spacing-large;
+      margin-bottom: 1rem;
 
       label {
         display: block;
-        margin-bottom: $spacing-small;
+        margin-bottom: 0.5rem;
         font-weight: bold;
         color: $primary-color;
       }
@@ -36,9 +50,9 @@
       input,
       select {
         width: 100%;
-        padding: $spacing-small;
+        padding: 0.5rem;
         border: 1px solid $secondary-color;
-        border-radius: $border-radius;
+        border-radius: 4px;
         font-size: 1rem;
 
         &:focus {
@@ -48,51 +62,78 @@
       }
     }
 
-    .input-with-icon {
-      position: relative;
+    // City input (full width)
+    .form-group--city {
+      width: 100%;
+    }
 
-      .icon {
-        position: absolute;
-        right: $spacing-small;
-        top: 50%;
-        transform: translateY(-50%);
-        pointer-events: none;
+    // Date inputs (side by side)
+    .form-group--date {
+      width: 48%; // Slightly less than 50% to account for gap
+      display: inline-block;
+
+      &:first-of-type {
+        margin-right: 4%; // Creates gap between date inputs
       }
     }
 
+    // Guest inputs
     .guest-inputs {
       display: flex;
       justify-content: space-between;
-
-      > div {
-        flex: 1;
-        margin-right: $spacing-small;
-
-        &:last-child {
-          margin-right: 0;
-        }
-
-        label {
-          font-size: 0.9rem;
-        }
-
-        input {
-          width: 100%;
-        }
-      }
     }
 
-    .price-range-slider {
+    .form-group--guest {
+      width: 30%; // Allows three guest inputs to fit side by side
+    }
+
+    // Price range slider
+    .price-range {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+
       input[type="range"] {
-        width: 100%;
+        flex-grow: 1;
+      }
+
+      .price-display {
+        min-width: 100px;
+        text-align: right;
       }
     }
 
+    // Search button
     .search-button {
       width: 100%;
-      padding: $spacing-medium;
+      padding: 1rem;
       font-size: 1.1rem;
-      margin-top: $spacing-large;
+      margin-top: 2rem;
+      background-color: $primary-color;
+      color: $white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+
+      &:hover {
+        background-color: darken($primary-color, 10%);
+      }
+    }
+  }
+}
+
+// Simple responsive adjustments
+@media (max-width: 768px) {
+  .refinement-page__form {
+    .form-group--date,
+    .form-group--guest {
+      width: 100%;
+      margin-right: 0;
+    }
+
+    .guest-inputs {
+      flex-direction: column;
     }
   }
 }
