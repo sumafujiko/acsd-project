@@ -42,20 +42,21 @@ const Home = () => {
         style={{ backgroundImage: `url(${heroImage})` }}
       >
         <div className="landing-page__hero-content">
-          <h1>Discover Your Next Adventure</h1>
-          <p>Explore the world with ease</p>
-          {/* Search form */}
-          <form className="landing-page__search" onSubmit={handleSearch}>
-            <input
-              type="text"
-              placeholder="Enter a city or country"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-            />
-            <button type="submit">🔍</button>
-          </form>
+          <h1 className="landing-page__hero-slogan">
+            Discover Your Next Adventure
+          </h1>
+          <div className="landing-page__search-container">
+            <form className="landing-page__search" onSubmit={handleSearch}>
+              <input
+                type="text"
+                placeholder="Where do you want to go?"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+              />
+              <button type="submit">Search</button>
+            </form>
+          </div>
         </div>
-        {/* Hero image credit */}
         <div className="landing-page__hero-credit">
           Image by Christo Anestev from Pixabay
         </div>
