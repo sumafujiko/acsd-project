@@ -7,7 +7,7 @@ import {
   getMinDepartureDate,
   getMinReturnDate,
   validatePassengers,
-} from "./RefinementData";
+} from "../../utils/RefinementData";
 
 // RefinementForm component receives initialLocation as a prop from the parent component
 const RefinementForm = ({ initialLocation }) => {

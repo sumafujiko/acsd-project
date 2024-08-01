@@ -1,6 +1,4 @@
 // Initial form data
-
-// These forms have been copy and pasted from forums and a
 export const initialFormData = {
   location: "",
   departureDate: "",
@@ -9,15 +7,20 @@ export const initialFormData = {
   children: 0,
   infants: 0,
   priceRange: [0, 1000],
-  sortBy: "price",
 };
 
+// Passenger type definitions
 export const passengerTypes = [
-  { name: "adults", label: "Adults", min: 1, max: 10 },
-  { name: "children", label: "Children", min: 0, max: 10 },
-  { name: "infants", label: "Infants", min: 0, max: 5 },
+  { name: "adults", label: "Adults", min: 1, max: 9 },
+  { name: "children", label: "Children", min: 0, max: 8 },
+  { name: "infants", label: "Infants", min: 0, max: 4 },
 ];
 
+// Passenger limit constants
+const MAX_TOTAL_PASSENGERS = 9;
+const MIN_ADULTS = 1;
+
+// Travel class options
 export const travelClasses = [
   { value: "economy", label: "Economy" },
   { value: "premium_economy", label: "Premium Economy" },
@@ -25,17 +28,11 @@ export const travelClasses = [
   { value: "first", label: "First Class" },
 ];
 
-// Add this new export for sort options
-export const sortOptions = [
-  { value: "price", label: "Price" },
-  { value: "duration", label: "Duration" },
-  { value: "recommended", label: "Recommended" },
-];
-
+// Price range configuration
 export const priceRangeConfig = {
   min: 0,
-  max: 1000,
-  step: 10,
+  max: 1000, // Maximum price range
+  step: 100,
 };
 
 // Function to format date for input fields
@@ -50,18 +47,57 @@ export const getMinDepartureDate = () => {
 
 // Function to get minimum return date (day after departure)
 export const getMinReturnDate = (departureDate) => {
-  if (!departureDate) return "";
+  if (!departureDate) return getMinDepartureDate();
   const nextDay = new Date(departureDate);
   nextDay.setDate(nextDay.getDate() + 1);
   return formatDate(nextDay);
 };
 
-// Validation functions
+// Validation function for dates
 export const validateDates = (departureDate, returnDate) => {
   if (!departureDate || !returnDate) return true;
   return new Date(returnDate) > new Date(departureDate);
 };
 
+// Validation function for passengers
 export const validatePassengers = (adults, children, infants) => {
-  return adults >= 1 && adults + children + infants <= 9 && infants <= adults;
+  const totalPassengers = adults + children + infants;
+
+  if (adults < MIN_ADULTS) {
+    return {
+      valid: false,
+      message: `There must be at least ${MIN_ADULTS} adult passenger.`,
+    };
+  }
+
+  if (totalPassengers > MAX_TOTAL_PASSENGERS) {
+    return {
+      valid: false,
+      message: `Total passengers cannot exceed ${MAX_TOTAL_PASSENGERS}.`,
+    };
+  }
+
+  if (infants > adults) {
+    return {
+      valid: false,
+      message: "The number of infants cannot exceed the number of adults.",
+    };
+  }
+
+  for (const type of passengerTypes) {
+    const count =
+      type.name === "adults"
+        ? adults
+        : type.name === "children"
+        ? children
+        : infants;
+    if (count < type.min || count > type.max) {
+      return {
+        valid: false,
+        message: `Invalid number of ${type.label.toLowerCase()}.`,
+      };
+    }
+  }
+
+  return { valid: true };
 };
