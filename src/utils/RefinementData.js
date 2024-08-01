@@ -1,4 +1,6 @@
-// Initial form data (To be changed?)
+// Initial form data
+
+// These forms have been copy and pasted from forums and a
 export const initialFormData = {
   location: "",
   departureDate: "",
@@ -6,19 +8,16 @@ export const initialFormData = {
   adults: 1,
   children: 0,
   infants: 0,
-  travelClass: "economy",
-  priceRange: [0, 5000],
+  priceRange: [0, 1000],
   sortBy: "price",
 };
 
-// Passenger types configuration
 export const passengerTypes = [
-  { name: "adults", label: "Adults", min: 1, max: 10 }, // These can change if it causes problems
-  { name: "children", label: "Children (2-11)", min: 0, max: 10 },
-  { name: "infants", label: "Infants (under 2)", min: 0, max: 5 },
+  { name: "adults", label: "Adults", min: 1, max: 10 },
+  { name: "children", label: "Children", min: 0, max: 10 },
+  { name: "infants", label: "Infants", min: 0, max: 5 },
 ];
 
-// Travel class options (Not used now but maybe changed later)
 export const travelClasses = [
   { value: "economy", label: "Economy" },
   { value: "premium_economy", label: "Premium Economy" },
@@ -26,11 +25,17 @@ export const travelClasses = [
   { value: "first", label: "First Class" },
 ];
 
-// Price range configuration
+// Add this new export for sort options
+export const sortOptions = [
+  { value: "price", label: "Price" },
+  { value: "duration", label: "Duration" },
+  { value: "recommended", label: "Recommended" },
+];
+
 export const priceRangeConfig = {
   min: 0,
-  max: 1500,
-  step: 100,
+  max: 1000,
+  step: 10,
 };
 
 // Function to format date for input fields
