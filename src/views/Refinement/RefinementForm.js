@@ -3,12 +3,9 @@ import { useNavigate } from "react-router-dom";
 import {
   initialFormData,
   passengerTypes,
-  travelClasses,
-  sortOptions,
   priceRangeConfig,
   getMinDepartureDate,
   getMinReturnDate,
-  validateDates,
   validatePassengers,
 } from "./RefinementData";
 
@@ -16,11 +13,11 @@ import {
 const RefinementForm = ({ initialLocation }) => {
   const navigate = useNavigate();
 
-  // Initialise form data with default values and the initial location
+  // Initialize form data with default values and the initial location
   const [formData, setFormData] = useState({
     ...initialFormData,
     location: initialLocation,
-    priceRange: [0, 1000], // Initial price range
+    priceRange: [priceRangeConfig.min, priceRangeConfig.max],
   });
 
   // State for storing validation errors
@@ -31,7 +28,10 @@ const RefinementForm = ({ initialLocation }) => {
     const { name, value } = e.target;
     setFormData((prevState) => ({
       ...prevState,
-      [name]: value,
+      [name]:
+        name === "adults" || name === "children" || name === "infants"
+          ? parseInt(value) || 0 // Ensure passenger counts are numbers
+          : value,
     }));
   };
 
@@ -40,7 +40,7 @@ const RefinementForm = ({ initialLocation }) => {
     const value = parseInt(e.target.value);
     setFormData((prevState) => ({
       ...prevState,
-      priceRange: [0, value],
+      priceRange: [priceRangeConfig.min, value],
     }));
   };
 
@@ -48,36 +48,29 @@ const RefinementForm = ({ initialLocation }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // Validate the form data
-    const validationErrors = {};
-    if (!validateDates(formData.departureDate, formData.returnDate)) {
-      validationErrors.dates = "Invalid date range";
-    }
-    if (
-      !validatePassengers(formData.adults, formData.children, formData.infants)
-    ) {
-      validationErrors.passengers = "Invalid passenger configuration";
-    }
+    // Validate passengers (Logic in RefinementData.js)
+    const passengerValidation = validatePassengers(
+      formData.adults,
+      formData.children,
+      formData.infants
+    );
 
-    // If there are validation errors, update the errors state and stop submission
-    if (Object.keys(validationErrors).length > 0) {
-      setErrors(validationErrors);
+    // If passenger configuration is invalid, set error and stop submission
+    if (!passengerValidation.valid) {
+      setErrors({ passengers: passengerValidation.message });
       return;
     }
 
-    // Clear any existing errors
+    // Clear any previous errors
     setErrors({});
 
-    // Logging search criteria just for testing
-    console.log("Search criteria:", formData);
-
-    // This should pass the search criteria to the flights page maybe?
+    // Navigate to the FlightPage with the form data
     navigate("/flights", { state: { searchCriteria: formData } });
   };
 
   return (
     <form onSubmit={handleSubmit} className="refinement-page__form">
-      {/* Location Section */}
+      {/* Location input */}
       <div className="form-section">
         <div className="form-group form-group--city">
           <label htmlFor="location">City:</label>
@@ -92,36 +85,38 @@ const RefinementForm = ({ initialLocation }) => {
           />
         </div>
 
-        {/* Date Selection Section */}
-        <div className="date-inputs-container">
-          <div className="form-group form-group--date">
-            <label htmlFor="departureDate">Departure:</label>
-            <input
-              type="date"
-              id="departureDate"
-              name="departureDate"
-              value={formData.departureDate}
-              onChange={handleInputChange}
-              min={getMinDepartureDate()}
-              required
-            />
-          </div>
+        {/* Date inputs */}
+        <div className="form-section">
+          <div className="form-date-container">
+            <div className="form-group form-group--date">
+              <label htmlFor="departureDate">Departure:</label>
+              <input
+                type="date"
+                id="departureDate"
+                name="departureDate"
+                value={formData.departureDate}
+                onChange={handleInputChange}
+                min={getMinDepartureDate()}
+                required
+              />
+            </div>
 
-          <div className="form-group form-group--date">
-            <label htmlFor="returnDate">Return:</label>
-            <input
-              type="date"
-              id="returnDate"
-              name="returnDate"
-              value={formData.returnDate}
-              onChange={handleInputChange}
-              min={getMinReturnDate(formData.departureDate)}
-              required
-            />
+            <div className="form-group form-group--date">
+              <label htmlFor="returnDate">Return:</label>
+              <input
+                type="date"
+                id="returnDate"
+                name="returnDate"
+                value={formData.returnDate}
+                onChange={handleInputChange}
+                min={getMinReturnDate(formData.departureDate)}
+                required
+              />
+            </div>
           </div>
         </div>
 
-        {/* Passengers Section */}
+        {/* Passenger inputs */}
         <div className="form-group guest-section">
           <label>Guests:</label>
           <div className="guest-inputs">
@@ -139,10 +134,14 @@ const RefinementForm = ({ initialLocation }) => {
               </div>
             ))}
           </div>
+          {/* Display passenger validation error if it pops up */}
+          {errors.passengers && (
+            <span className="error-message">{errors.passengers}</span>
+          )}
         </div>
       </div>
 
-      {/* Price Range Section */}
+      {/* Price range slider */}
       <div className="form-section">
         <div className="form-group">
           <label>Price Range:</label>
@@ -152,29 +151,18 @@ const RefinementForm = ({ initialLocation }) => {
               name="priceRange"
               value={formData.priceRange[1]}
               onChange={handlePriceRangeChange}
-              min={0}
-              max={1000}
-              step={10}
+              min={priceRangeConfig.min}
+              max={priceRangeConfig.max}
+              step={priceRangeConfig.step}
             />
             <span className="price-display">
-              €0 - €{formData.priceRange[1]}
+              €{formData.priceRange[0]} - €{formData.priceRange[1]}
             </span>
           </div>
         </div>
       </div>
 
-      {/* Error display section */}
-      {Object.keys(errors).length > 0 && (
-        <div className="error-section">
-          {Object.values(errors).map((error, index) => (
-            <p key={index} className="error-message">
-              {error}
-            </p>
-          ))}
-        </div>
-      )}
-
-      {/* Submit Button */}
+      {/* Submit button */}
       <button type="submit" className="search-button">
         Search Flights
       </button>

@@ -68,12 +68,29 @@
     }
 
     // Date inputs (side by side)
-    .form-group--date {
-      width: 48%; // Slightly less than 50% to account for gap
-      display: inline-block;
+    // Making a container so I can actually position the departure and return correctly
+    .form-date-container {
+      display: flex;
+      gap: 2rem; // Space between the date inputs (This took a weird amount of time to setup)
+    }
 
-      &:first-of-type {
-        margin-right: 4%; // Creates gap between date inputs
+    .form-group--date {
+      flex: 1; // Allow each date input to grow equally
+      min-width: 0; // Prevent inputs from shrinking too small
+
+      label {
+        display: block;
+        margin-bottom: 0.5rem;
+        font-weight: bold;
+        color: $primary-color;
+      }
+
+      input[type="date"] {
+        width: 100%; // Make input span full width of its container
+        padding: 0.5rem;
+        border: 1px solid $secondary-color;
+        border-radius: 4px;
+        font-size: 1rem;
       }
     }
 
@@ -84,7 +101,7 @@
     }
 
     .form-group--guest {
-      width: 30%; // Allows three guest inputs to fit side by side
+      width: 30%; // The Adult, Child, and Infant inputs should be the same width
     }
 
     // Price range slider
@@ -135,5 +152,15 @@
     .guest-inputs {
       flex-direction: column;
     }
+  }
+}
+// For the date inputs, had to make this after the fact
+@media (max-width: 768px) {
+  .form-date-container {
+    flex-direction: column; // Stack date inputs on smaller screens
+  }
+
+  .form-group--date {
+    width: 100%; // Make date inputs full width on smaller screens
   }
 }

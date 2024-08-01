@@ -6,7 +6,7 @@ import "../../sass/refinement.scss";
 const Refinement = () => {
   const location = useLocation();
   const initialLocation = location.state?.location || "";
-
+  // I made a lot of the actual page on RefinementForm.js, dont know if thats good or not?
   return (
     <div className="refinement-page">
       <div className="refinement-page__container">
