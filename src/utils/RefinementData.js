@@ -20,14 +20,6 @@ export const passengerTypes = [
 const MAX_TOTAL_PASSENGERS = 9;
 const MIN_ADULTS = 1;
 
-// Travel class options
-export const travelClasses = [
-  { value: "economy", label: "Economy" },
-  { value: "premium_economy", label: "Premium Economy" },
-  { value: "business", label: "Business" },
-  { value: "first", label: "First Class" },
-];
-
 // Price range configuration
 export const priceRangeConfig = {
   min: 0,
