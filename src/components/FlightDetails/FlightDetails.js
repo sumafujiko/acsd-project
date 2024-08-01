@@ -4,20 +4,21 @@ import FlightSegment from "./FlightSegment";
 const FlightDetails = ({ flightDetail }) => {
   console.log(flightDetail, "someflightdetails");
   return (
-    <div className="flight-trip-container">
-      <p className="price-par">Price: €{flightDetail.price}</p>
-      <p className="inbound-outbound-par">Outbound</p>
-      <div className="flight-details-container">
-        {flightDetail.outboundFlight.map((segment) => (
-          <FlightSegment flightSegment={segment} />
+    <div className="flight-details">
+      <p className="flight-details__price">Price: €{flightDetail.price}</p>
+      <p className="flight-details__inbound-outbound">Outbound</p>
+      <div className="flight-details__container-flight">
+        {flightDetail.outboundFlight.map((segment, index) => (
+          <FlightSegment flightSegment={segment} key={index} />
         ))}
       </div>
-      {flightDetail.returnFlight && <p>Return</p>}
       {flightDetail.returnFlight && (
-        <div className="flight-details-container">
-          {console.log(flightDetail.returnFlight, "return flight")}
-          {flightDetail.returnFlight.map((segment) => (
-            <FlightSegment flightSegment={segment} />
+        <p className="flight-details__inbound-outbound">Return</p>
+      )}
+      {flightDetail.returnFlight && (
+        <div className="flight-details__container-flight">
+          {flightDetail.returnFlight.map((segment, index) => (
+            <FlightSegment flightSegment={segment} key={index} />
           ))}
         </div>
       )}

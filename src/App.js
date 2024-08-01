@@ -5,7 +5,6 @@ import PaymentPage from "./views/Payment/PaymentPage";
 import Home from "./views/Home/LandingPage";
 import Refinement from "./views/Refinement/Refinement";
 import "./sass/global.scss";
-import Test from "./views/Test";
 
 function App() {
   return (
@@ -16,7 +15,6 @@ function App() {
           <Route path="refinement" element={<Refinement />} />
           <Route path="flights" element={<FlightPage />} />
           <Route path="payments" element={<PaymentPage />} />
-          <Route path="test" element={<Test />} />
         </Route>
       </Routes>
     </BrowserRouter>

@@ -1,47 +1,115 @@
-.flight-trip-container {
-    display:flex;
-    flex-direction:column;
-    background-color: #f7f7f7;
+@import "variables";
+@import "mixins";
+
+.flight-page {
+  background-color: $secondary-color;
+  padding: 0;
+  color: $white;
+  min-height: 90vh;
+
+  &--loading {
+    @include flex-center;
+  }
+
+  &__header {
+    text-align: center;
+    padding-top: 2rem;
+  }
+
+  &__error {
+    width: 100%;
+    text-align: center;
+    color: $error;
+    font-size: larger;
+  }
+
+  &__container {
+    display: flex;
+    flex-direction: column;
     margin-top: 2rem;
     cursor: pointer;
-    padding:1rem;
+    padding: 1rem;
+
     &:hover {
-        filter: brightness(0.95);
+      filter: brightness(0.95);
     }
-.price-par {
+  }
+
+  &__container-trips {
+    padding: 1rem;
+  }
+}
+
+.flight-details {
+  display: flex;
+  flex-direction: column;
+  background-color: #f7f7f7;
+  margin-bottom: 2rem;
+  cursor: pointer;
+  transition: filter 0.2s ease;
+  padding: 0 1rem;
+
+  p {
+    padding: 0;
+    margin: 0;
+  }
+
+  &:hover {
+    filter: brightness(0.95);
+  }
+
+  &__container-flight {
+    display: flex;
+  }
+
+  &__price {
     font-weight: 800;
     text-align: center;
     margin-bottom: 0;
+    color: #333;
+  }
+
+  &__inbound-outbound {
+    margin: 0;
+    color: #333;
+  }
 }
 
-    .inbound-outbound-par {
-        margin:0;
-    }
-    .flight-details-container {
-        display:flex;
-        align-items: start;
-        justify-content: space-around;
-        background-color: #888;
-    }
+.flight-segment {
+  &__container {
+    display: flex;
+    justify-content: space-between;
+    padding: 1rem;
+    background-color: #b2b2b2;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-bottom: 1rem;
+    width: 100%;
+    align-items: center;
+  }
 
-    .flight-details-segment {
-        display:flex;
-        background-color: #999;
-        gap:1rem;
-        align-items: center;
-        width:100%;
-        justify-content: center;
-        border: 1px solid gray;
+  &__departure,
+  &__arrival {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 45%;
+  }
 
-        .airport-par {
-            font-weight: 700;
-        }
+  &__airport {
+    font-weight: bold;
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+  }
 
-      .time-par {
-        margin-top:-0.8rem;
-      }
-    }
+  &__date {
+    font-size: 0.9rem;
+    color: #666;
+    margin-bottom: 0.5rem;
+  }
+
+  &__time {
+    font-size: 1.1rem;
+    color: #333;
+  }
 }
-
-
-
