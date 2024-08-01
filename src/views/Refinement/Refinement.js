@@ -10,7 +10,7 @@ const Refinement = () => {
   return (
     <div className="refinement-page">
       <div className="refinement-page__container">
-        <h1 className="refinement-page__title">Refine Your Search</h1>
+        <h1 className="refinement-page__title">Book your flights</h1>
         <RefinementForm initialLocation={initialLocation} />
       </div>
     </div>

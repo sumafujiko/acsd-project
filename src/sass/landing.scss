@@ -2,7 +2,7 @@
 @import "./mixins";
 
 .landing-page {
-  overflow-x: hidden; // Prevent horizontal scrolling
+  overflow-x: hidden; // Prevent horizontal scrolling, this was happening when the browser was resized
 
   &__hero {
     background-size: cover;
