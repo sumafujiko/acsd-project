@@ -66,7 +66,6 @@ const FlightDetailsSorter = ({ originalData, setFlights }) => {
   //effectively resetting the other two filters
   const handleUserSelection = (e) => {
     const { name, value } = e.target;
-    if (!name || !value) return;
 
     //pass the rest of one into the other
     const newSelection = { ...userSelection, [name]: value };
@@ -87,7 +86,7 @@ const FlightDetailsSorter = ({ originalData, setFlights }) => {
             id="airportSelect"
             onChange={handleUserSelection}
           >
-            <option undefined>None Selected</option>
+            <option value="">None Selected</option>
             {Array.from(airportSet).map((airport) => (
               <option value={airport}>{airport}</option>
             ))}
@@ -100,7 +99,7 @@ const FlightDetailsSorter = ({ originalData, setFlights }) => {
             id="maxLayover"
             onChange={handleUserSelection}
           >
-            <option value={undefined}>None Selected</option>
+            <option value="">None Selected</option>
             <option value={0}>0</option>
             <option value={1}>1</option>
             <option value={2}>2</option>
@@ -113,7 +112,7 @@ const FlightDetailsSorter = ({ originalData, setFlights }) => {
             id="priceSort"
             onChange={handleUserSelection}
           >
-            <option value={undefined}>None Selected</option>
+            <option value="">None Selected</option>
             <option value="asc">Ascending</option>
             <option value="desc">Descending</option>
           </select>
