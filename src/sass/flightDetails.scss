@@ -2,7 +2,11 @@
 @import "mixins";
 
 .flight-page {
-  background-color: $secondary-color;
+  background-image: linear-gradient(to bottom, transparent, $secondary-color),
+    url("../images/landing-hero-background.jpg"),
+    linear-gradient(to bottom, $secondary-color, $secondary-color);
+  background-size: 100% 100vh, 100% 100vh, 100% auto;
+  background-repeat: no-repeat;
   padding: 0;
   color: $white;
   min-height: 90vh;
@@ -13,7 +17,6 @@
 
   &__header {
     text-align: center;
-    padding-top: 2rem;
   }
 
   &__error {
@@ -47,7 +50,8 @@
   margin-bottom: 2rem;
   cursor: pointer;
   transition: filter 0.2s ease;
-  padding: 0 1rem;
+  padding: 1rem 1rem 0 1rem;
+  border-radius: 0.2rem;
 
   p {
     padding: 0;
@@ -66,7 +70,7 @@
     font-weight: 800;
     text-align: center;
     margin-bottom: 0;
-    color: #333;
+    color: $primary-color;
   }
 
   &__inbound-outbound {
@@ -80,12 +84,22 @@
     display: flex;
     justify-content: space-between;
     padding: 1rem;
-    background-color: #b2b2b2;
+    background-color: $accent-color;
     border: 1px solid #ddd;
     border-radius: 4px;
     margin-bottom: 1rem;
     width: 100%;
     align-items: center;
+    color: $primary-color;
+  }
+
+  &__joiner {
+    width: 10rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    font-weight: 700;
   }
 
   &__departure,
@@ -104,12 +118,49 @@
 
   &__date {
     font-size: 0.9rem;
-    color: #666;
     margin-bottom: 0.5rem;
   }
 
   &__time {
     font-size: 1.1rem;
-    color: #333;
+  }
+}
+
+.flight-sorter {
+  &__container {
+    width: 100%;
+    margin: $spacing-large 0;
+  }
+
+  &__form {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+  }
+
+  &__input-container {
+    display: flex;
+    select {
+      flex-grow: 1;
+      padding: $spacing-small;
+      font-size: 1.2rem;
+      border: none;
+      border-radius: $border-radius 0 0 $border-radius;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      vertical-align: middle; // Select was sitting 1px lower than label for some reason
+    }
+
+    label {
+      padding: $spacing-small;
+      vertical-align: middle;
+      font-size: 1.2rem;
+      border: none;
+      border-radius: 0 $border-radius $border-radius 0;
+      background-color: $accent-color;
+      color: $white;
+      transition: background-color 0.3s ease;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
   }
 }

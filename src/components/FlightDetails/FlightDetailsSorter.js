@@ -1,12 +1,16 @@
 import { useState } from "react";
 
+import "../../sass/flightDetails.scss";
+
 const FlightDetailsSorter = ({ originalData, setFlights }) => {
   const userSelection = useState({});
+
   //doesnt neet to be state as its derived from props
-  const airports = new Set();
-  originalData.forEach((flight) => {
-    airports.set(flight.outboundFlight.arrivalAirport);
-  });
+  const airportSet = new Set(
+    ...originalData
+      .map((flight) => flight?.outBoundFlight?.arrivalAirport)
+      .filter((airport) => airport !== null && airport !== undefined)
+  );
 
   const filterByAirport = (userSelection, flightsToFilter) => {
     const airport = userSelection.airportSelector;
@@ -22,11 +26,15 @@ const FlightDetailsSorter = ({ originalData, setFlights }) => {
   const filterByMaxLayover = (userSelection, flightsToFilter) => {
     const maxLayover = userSelection.maxLayover;
     if (!maxLayover) return flightsToFilter;
-    const filteredFlights = flightsToFilter.filter(
-      (trip) =>
-        trip.outBoundFlight.length < maxLayover &&
-        trip.returnFlight.length < maxLayover
-    );
+    console.log(flightsToFilter);
+    const filteredFlights = flightsToFilter.filter((trip) => {
+      const outboundLayovers = trip.outboundFlight.length;
+      const returnLayovers = trip.returnFlight?.length
+        ? trip.returnFlight.length
+        : 0;
+      return outboundLayovers <= maxLayover && returnLayovers <= maxLayover;
+    });
+    console.log(filteredFlights, "filtered after max layover");
     return filteredFlights;
   };
 
@@ -47,28 +55,27 @@ const FlightDetailsSorter = ({ originalData, setFlights }) => {
     const filteredByAirport = filterByAirport(newSelection, originalData);
     const filtedByLayover = filterByMaxLayover(newSelection, filteredByAirport);
     const sortedByPrice = sortByPrice(newSelection, filtedByLayover);
-
+    console.log(sortedByPrice, "sortedby price");
     setFlights(sortedByPrice);
   };
 
   return (
     <div className="flight-sorter__container">
-      <form>
-        <div>
-          <label htmlFor="airportSelector">Airport</label>
+      <form className="flight-sorter__form">
+        <div className="flight-sorter__input-container">
           <select
             name="airportSelect"
             id="airportSelector"
             onChange={handleUserSelection}
           >
             <option undefined>None Selected</option>
-            {Array.from(airports).map((airport) => (
+            {Array.from(airportSet).map((airport) => (
               <option value={airport}>{airport}</option>
             ))}
           </select>
+          <label htmlFor="airportSelector">Airport</label>
         </div>
-        <div>
-          <label htmlFor="maxLayover">Max Layovers</label>
+        <div className="flight-sorter__input-container">
           <select
             name="maxLayover"
             id="maxLayover"
@@ -79,9 +86,9 @@ const FlightDetailsSorter = ({ originalData, setFlights }) => {
             <option value={1}>1</option>
             <option value={2}>2</option>
           </select>
+          <label htmlFor="maxLayover">Max Layovers</label>
         </div>
-        <div>
-          <label htmlFor="priceSort">Sort by Price</label>
+        <div className="flight-sorter__input-container">
           <select
             name="priceSort"
             id="priceSort"
@@ -91,6 +98,7 @@ const FlightDetailsSorter = ({ originalData, setFlights }) => {
             <option value="asc">Ascending</option>
             <option value="desc">Descending</option>
           </select>
+          <label htmlFor="priceSort">Sort by Price</label>
         </div>
       </form>
     </div>

@@ -6,6 +6,7 @@ import FlightDetails from "../../components/FlightDetails/FlightDetails";
 import "../../sass/flightDetails.scss";
 import { useLocation } from "react-router-dom";
 import iataCodes from "./iataCodes";
+import FlightDetailsSorter from "../../components/FlightDetails/FlightDetailsSorter";
 
 const API_KEY = process.env.REACT_APP_AMADEUS_API_KEY;
 const API_SECRET = process.env.REACT_APP_AMADEUS_API_SECRET;
@@ -13,7 +14,8 @@ const API_SECRET = process.env.REACT_APP_AMADEUS_API_SECRET;
 const FlightPage = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  const [data, setData] = useState(null);
+  const [data, setData] = useState([]);
+  const [originalData, setOriginalData] = useState([]);
   const location = useLocation();
   const abortController = useMemo(() => new AbortController(), []);
 
@@ -88,6 +90,7 @@ const FlightPage = () => {
         throw new Error("Parsing Error");
       }
       const formattedData = data.map((trip) => parseFlight(trip));
+      setOriginalData(formattedData);
       setData(formattedData);
     } catch (error) {
       console.log(error);
@@ -117,9 +120,12 @@ const FlightPage = () => {
 
   return (
     <div className="flight-page">
+      <br />
+      {/*Header margins were pushing this down so now its pushing against something in the same container.  Feels hacky */}
       <p className="flight-page__error">{error}</p>
       <h1 className="flight-page__header">{determineHeaderStatement()}</h1>
       <div className="flight-page__container-trips">
+        <FlightDetailsSorter originalData={originalData} setFlights={setData} />
         {data?.map((trip, index) => (
           <FlightDetails flightDetail={trip} key={index} />
         ))}

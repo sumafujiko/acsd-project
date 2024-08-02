@@ -2,7 +2,6 @@ import "./FlightSegment";
 import FlightSegment from "./FlightSegment";
 
 const FlightDetails = ({ flightDetail }) => {
-  console.log(flightDetail, "someflightdetails");
   return (
     <div className="flight-details">
       <p className="flight-details__price">Price: €{flightDetail.price}</p>

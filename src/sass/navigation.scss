@@ -1,5 +1,5 @@
-@import './global.scss';
-@import './variables.scss';
+@import "./global.scss";
+@import "./variables.scss";
 
 // Navbar styles
 .navbar {
@@ -22,7 +22,10 @@
     text-decoration: none !important;
     color: $white !important; //cant get this to be purple, will work on it later
 
-    &:visited, &:active, &:hover, &:link {
+    &:visited,
+    &:active,
+    &:hover,
+    &:link {
       color: $white !important;
       text-decoration: none !important;
     }
@@ -44,7 +47,10 @@
     color: $white !important;
     transition: color 0.3s ease;
 
-    &:visited, &:active, &:hover, &:link {
+    &:visited,
+    &:active,
+    &:hover,
+    &:link {
       color: $white !important;
       text-decoration: none;
     }
@@ -79,7 +85,10 @@
     text-decoration: none;
     color: $white !important;
 
-    &:visited, &:active, &:hover, &:link {
+    &:visited,
+    &:active,
+    &:hover,
+    &:link {
       color: $white !important;
       text-decoration: none;
     }
