@@ -1,23 +1,40 @@
-import "./FlightSegment";
+import { useContext } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
+
 import FlightSegment from "./FlightSegment";
+import { CartContext } from "../../contexts/cartContext";
 
 const FlightDetails = ({ flightDetail }) => {
-  console.log(flightDetail, "someflightdetails");
+  const { setTripCart } = useContext(CartContext);
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const userSelection = location.state;
+
+  const handleSelect = () => {
+    setTripCart((prev) => ({
+      ...prev,
+      flight: flightDetail,
+    }));
+
+    navigate("/payments", { state: userSelection });
+  };
   return (
-    <div className="flight-trip-container">
-      <p className="price-par">Price: €{flightDetail.price}</p>
-      <p className="inbound-outbound-par">Outbound</p>
-      <div className="flight-details-container">
-        {flightDetail.outboundFlight.map((segment) => (
-          <FlightSegment flightSegment={segment} />
+    <div className="flight-details" onClick={handleSelect}>
+      <p className="flight-details__price">Price: €{flightDetail.price}</p>
+      <p className="flight-details__inbound-outbound">Outbound</p>
+      <div className="flight-details__container-flight">
+        {flightDetail.outboundFlight.map((segment, index) => (
+          <FlightSegment flightSegment={segment} key={index} />
         ))}
       </div>
-      {flightDetail.returnFlight && <p>Return</p>}
       {flightDetail.returnFlight && (
-        <div className="flight-details-container">
-          {console.log(flightDetail.returnFlight, "return flight")}
-          {flightDetail.returnFlight.map((segment) => (
-            <FlightSegment flightSegment={segment} />
+        <p className="flight-details__inbound-outbound">Return</p>
+      )}
+      {flightDetail.returnFlight && (
+        <div className="flight-details__container-flight">
+          {flightDetail.returnFlight.map((segment, index) => (
+            <FlightSegment flightSegment={segment} key={index} />
           ))}
         </div>
       )}

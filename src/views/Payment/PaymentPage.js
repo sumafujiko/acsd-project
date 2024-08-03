@@ -1,5 +1,10 @@
+import { useContext } from "react";
+import { CartContext } from "../../contexts/cartContext";
+
 const PaymentPage = () => {
-  return <div>Payments</div>;
+  const { tripCart } = useContext(CartContext);
+
+  return <div>{JSON.stringify(tripCart)}</div>;
 };
 
 export default PaymentPage;

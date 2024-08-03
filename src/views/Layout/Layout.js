@@ -8,7 +8,7 @@ const Layout = () => {
     <div className="layout">
       <Navbar />
       {/* Outlet is a React-Router-Dom placeholder which different pages will be subbed in for depending on the location */}
-      <main className="layout__content">
+      <main>
         <Outlet />
       </main>
       <Footer />

@@ -1,47 +1,166 @@
-.flight-trip-container {
-    display:flex;
-    flex-direction:column;
-    background-color: #f7f7f7;
+@import "variables";
+@import "mixins";
+
+.flight-page {
+  background-image: linear-gradient(to bottom, transparent, $secondary-color),
+    url("../images/landing-hero-background.jpg"),
+    linear-gradient(to bottom, $secondary-color, $secondary-color);
+  background-size: 100% 100vh, 100% 100vh, 100% auto;
+  background-repeat: no-repeat;
+  padding: 0;
+  color: $white;
+  min-height: 90vh;
+
+  &--loading {
+    @include flex-center;
+  }
+
+  &__header {
+    text-align: center;
+  }
+
+  &__error {
+    width: 100%;
+    text-align: center;
+    color: $error;
+    font-size: larger;
+  }
+
+  &__container {
+    display: flex;
+    flex-direction: column;
     margin-top: 2rem;
     cursor: pointer;
-    padding:1rem;
+    padding: 1rem;
+
     &:hover {
-        filter: brightness(0.95);
+      filter: brightness(0.95);
     }
-.price-par {
+  }
+
+  &__container-trips {
+    padding: 1rem;
+  }
+}
+
+.flight-details {
+  display: flex;
+  flex-direction: column;
+  background-color: #f7f7f7;
+  margin-bottom: 2rem;
+  cursor: pointer;
+  transition: filter 0.2s ease;
+  padding: 1rem 1rem 0 1rem;
+  border-radius: 0.2rem;
+
+  p {
+    padding: 0;
+    margin: 0;
+  }
+
+  &:hover {
+    filter: brightness(0.9);
+  }
+
+  &__container-flight {
+    display: flex;
+  }
+
+  &__price {
     font-weight: 800;
     text-align: center;
     margin-bottom: 0;
+    color: $primary-color;
+  }
+
+  &__inbound-outbound {
+    margin: 0;
+    color: #333;
+  }
 }
 
-    .inbound-outbound-par {
-        margin:0;
-    }
-    .flight-details-container {
-        display:flex;
-        align-items: start;
-        justify-content: space-around;
-        background-color: #888;
-    }
+.flight-segment {
+  &__container {
+    display: flex;
+    justify-content: space-between;
+    padding: 1rem;
+    background-color: $accent-color;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-bottom: 1rem;
+    width: 100%;
+    align-items: center;
+    color: $primary-color;
+  }
 
-    .flight-details-segment {
-        display:flex;
-        background-color: #999;
-        gap:1rem;
-        align-items: center;
-        width:100%;
-        justify-content: center;
-        border: 1px solid gray;
+  &__joiner {
+    width: 10rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    font-weight: 700;
+  }
 
-        .airport-par {
-            font-weight: 700;
-        }
+  &__departure,
+  &__arrival {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 45%;
+  }
 
-      .time-par {
-        margin-top:-0.8rem;
-      }
-    }
+  &__airport {
+    font-weight: bold;
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+  }
+
+  &__date {
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+  }
+
+  &__time {
+    font-size: 1.1rem;
+  }
 }
 
+.flight-sorter {
+  &__container {
+    width: 100%;
+    margin: $spacing-large 0;
+  }
 
+  &__form {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+  }
 
+  &__input-container {
+    display: flex;
+    select {
+      flex-grow: 1;
+      padding: $spacing-small;
+      font-size: 1.2rem;
+      border: none;
+      border-radius: $border-radius 0 0 $border-radius;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      vertical-align: middle; // Select was sitting 1px lower than label for some reason
+    }
+
+    label {
+      padding: $spacing-small;
+      vertical-align: middle;
+      font-size: 1.2rem;
+      border: none;
+      border-radius: 0 $border-radius $border-radius 0;
+      background-color: $accent-color;
+      color: $white;
+      transition: background-color 0.3s ease;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+  }
+}

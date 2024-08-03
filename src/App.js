@@ -5,20 +5,21 @@ import PaymentPage from "./views/Payment/PaymentPage";
 import Home from "./views/Home/LandingPage";
 import Refinement from "./views/Refinement/Refinement";
 import "./sass/global.scss";
-import Test from "./views/Test";
+import { CartContextProvider } from "./contexts/cartContext";
 
 function App() {
   return (
     <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Layout />}>
-          <Route index element={<Home />} />
-          <Route path="refinement" element={<Refinement />} />
-          <Route path="flights" element={<FlightPage />} />
-          <Route path="payments" element={<PaymentPage />} />
-          <Route path="test" element={<Test />} />
-        </Route>
-      </Routes>
+      <CartContextProvider>
+        <Routes>
+          <Route path="/" element={<Layout />}>
+            <Route index element={<Home />} />
+            <Route path="refinement" element={<Refinement />} />
+            <Route path="flights" element={<FlightPage />} />
+            <Route path="payments" element={<PaymentPage />} />
+          </Route>
+        </Routes>
+      </CartContextProvider>
     </BrowserRouter>
   );
 }
