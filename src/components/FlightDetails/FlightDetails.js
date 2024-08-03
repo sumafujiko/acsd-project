@@ -1,9 +1,26 @@
-import "./FlightSegment";
+import { useContext } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
+
 import FlightSegment from "./FlightSegment";
+import { CartContext } from "../../contexts/cartContext";
 
 const FlightDetails = ({ flightDetail }) => {
+  const { setTripCart } = useContext(CartContext);
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const userSelection = location.state;
+
+  const handleSelect = () => {
+    setTripCart((prev) => ({
+      ...prev,
+      flight: flightDetail,
+    }));
+
+    navigate("/payments", { state: userSelection });
+  };
   return (
-    <div className="flight-details">
+    <div className="flight-details" onClick={handleSelect}>
       <p className="flight-details__price">Price: €{flightDetail.price}</p>
       <p className="flight-details__inbound-outbound">Outbound</p>
       <div className="flight-details__container-flight">
