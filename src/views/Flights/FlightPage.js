@@ -47,7 +47,6 @@ const FlightPage = () => {
       infants,
       maxPrice: (priceRange[1] = "500"),
     };
-    console.log(params, "params");
 
     setLoading(true);
     setError("");
@@ -84,7 +83,6 @@ const FlightPage = () => {
           params,
         }
       );
-      console.log(response, "flight response");
       const data = response.data?.data;
       if (!Array.isArray(data)) {
         throw new Error("Parsing Error");
