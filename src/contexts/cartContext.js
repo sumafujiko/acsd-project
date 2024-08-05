@@ -1,4 +1,4 @@
-import { createContext, useState } from "react";
+import React, { createContext, useContext, useState } from "react";
 
 export const CartContext = createContext();
 
@@ -10,3 +10,5 @@ export const CartContextProvider = ({ children }) => {
     </CartContext.Provider>
   );
 };
+
+export const useCartContext = () => useContext(CartContext); // Was getting runtime errors without this

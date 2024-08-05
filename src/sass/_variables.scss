@@ -21,3 +21,6 @@ $breakpoint-mobile: 768px;
 // Additional variables
 $border-radius: 5px;
 $container-max-width: 1200px;
+
+// Define border-color for hotel
+$border-color: darken($background-color, 10%);
