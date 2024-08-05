@@ -16,8 +16,8 @@ const FlightDetails = ({ flightDetail }) => {
       ...prev,
       flight: flightDetail,
     }));
-
-    navigate("/payments", { state: userSelection });
+    // Changed to go to HotelPage.js
+    navigate("/hotels", { state: userSelection });
   };
   return (
     <div className="flight-details" onClick={handleSelect}>

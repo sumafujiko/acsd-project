@@ -4,6 +4,8 @@ import FlightPage from "./views/Flights/FlightPage";
 import PaymentPage from "./views/Payment/PaymentPage";
 import Home from "./views/Home/LandingPage";
 import Refinement from "./views/Refinement/Refinement";
+import HotelPage from "./views/Hotels/HotelPage";
+import TransportPage from "./views/Transport/TransportPage";
 import "./sass/global.scss";
 import { CartContextProvider } from "./contexts/cartContext";
 
@@ -16,6 +18,8 @@ function App() {
             <Route index element={<Home />} />
             <Route path="refinement" element={<Refinement />} />
             <Route path="flights" element={<FlightPage />} />
+            <Route path="hotels" element={<HotelPage />} />
+            <Route path="transport" element={<TransportPage />} />
             <Route path="payments" element={<PaymentPage />} />
           </Route>
         </Routes>
