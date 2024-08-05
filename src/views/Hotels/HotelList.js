@@ -2,6 +2,8 @@ import React from "react";
 import HotelCard from "./HotelCard";
 
 const HotelList = ({ hotels, onSelect }) => {
+  console.log("Hotels in HotelList:", hotels);
+
   if (!hotels || hotels.length === 0) {
     return (
       <div className="hotel-list__empty">
@@ -16,7 +18,7 @@ const HotelList = ({ hotels, onSelect }) => {
         <HotelCard
           key={hotel.hotel.hotelId}
           hotel={hotel}
-          onSelect={() => onSelect(hotel)}
+          onSelect={onSelect}
         />
       ))}
     </div>

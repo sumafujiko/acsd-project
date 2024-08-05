@@ -5,7 +5,6 @@ import useHotelSearch from "./useHotelSearch";
 import FlightSummary from "./FlightSummary";
 import HotelList from "./HotelList";
 import HotelDetails from "./HotelDetails";
-import ErrorBoundary from "../../components/ErrorBoundary";
 import "../../sass/hotelpage.scss";
 
 const HotelPage = () => {
@@ -32,7 +31,6 @@ const HotelPage = () => {
   };
 
   return (
-    <ErrorBoundary>
       <div className="hotel-page">
         <div className="hotel-page__container">
           <h1 className="hotel-page__title">Select a Hotel</h1>
@@ -52,7 +50,6 @@ const HotelPage = () => {
           )}
         </div>
       </div>
-    </ErrorBoundary>
   );
 };
 

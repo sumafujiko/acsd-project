@@ -5,21 +5,18 @@ const HotelCard = ({ hotel, onSelect }) => {
     return null;
   }
 
-  const { name, address } = hotel.hotel;
-  const { total, currency } = hotel.offers[0].price;
-  // These are not getting the data from the api correctly, will get it working soon
+  const { name } = hotel.hotel;
+  const { total, currency, perNight } = hotel.offers[0]?.price || {};
+
   return (
-    <div className="hotel-card" onClick={onSelect}>
-      <h2 className="hotel-card__name">{name}</h2>
+    <div className="hotel-card" onClick={() => onSelect(hotel)}>
+      <h2 className="hotel-card__name">{name || "Hotel Name Not Available"}</h2>
       <p className="hotel-card__price">
-        Price:{" "}
-        {total !== "N/A" ? `${total} ${currency}` : "Price not available"}
+        Price per night:{" "}
+        {perNight && currency
+          ? `${perNight} ${currency}`
+          : "Price not available"}
       </p>
-      {address && (
-        <p className="hotel-card__address">
-          Address: {address.lines?.join(", ")}, {address.cityName}
-        </p>
-      )}
     </div>
   );
 };

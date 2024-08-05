@@ -2,7 +2,6 @@
 @import "mixins";
 
 .hotel-page {
-  // Will change this to look more like refinement + wireframe after I get it it working
   background-image: linear-gradient(to bottom, transparent, $secondary-color),
     url("../images/landing-hero-background.jpg"),
     linear-gradient(to bottom, $secondary-color, $secondary-color);
