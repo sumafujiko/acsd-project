@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { getCityCode, safeApiCall } from '../../api/amadeusApi';
+import "../../sass/transport.scss";
 
 /**
  * TransferSearch component handles the search form for transfers

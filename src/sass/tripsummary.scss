@@ -1,0 +1,97 @@
+@import "variables";
+@import "mixins";
+
+.trip-summary {
+  background-color: $accent-color;
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin: 2rem auto; 
+  color: $primary-color;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  max-width: 1000px;
+  width: 90%;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+
+  &__title {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    text-align: center;
+  }
+
+  &__content {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 1rem;
+
+    // Adjust item sizes and alignment
+    > * {
+      flex: 1 1 calc(50% - 2rem); // Adjust item size
+    }
+  }
+
+  &__section {
+    background-color: $white;
+    border-radius: 4px;
+    padding: 1rem;
+    box-sizing: border-box;
+
+    h3 {
+      font-size: 1.2rem;
+      margin-bottom: 0.5rem;
+      border-bottom: 1px solid $secondary-color;
+      padding-bottom: 0.3rem;
+    }
+  }
+
+  .details-summary {
+    text-align: center;
+
+    &__item {
+      margin-bottom: 0.5rem;
+      font-size: 0.9rem;
+      text-align: left;
+
+      strong {
+        font-weight: bold;
+      }
+    }
+
+    &__calculation {
+      font-size: 0.8rem;
+      color: $secondary-color;
+      font-style: italic;
+    }
+  }
+
+  .flight-segment {
+    margin-bottom: 1rem;
+
+    h4 {
+      margin-bottom: 0.5rem;
+    }
+
+    &__details {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    &__airport {
+      text-align: center;
+      flex: 1;
+
+      p {
+        margin: 0.2rem 0;
+        font-size: 0.9rem; // Font size
+      }
+    }
+
+    &__arrow {
+      padding: 0 10px;
+    }
+  }
+}
