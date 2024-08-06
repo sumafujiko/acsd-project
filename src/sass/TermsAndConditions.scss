@@ -1,0 +1,36 @@
+
+.terms-and-conditions {
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    padding: 20px;
+    margin-top: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  
+    &__title {
+      font-size: 1.5rem;
+      color: #333;
+      margin-bottom: 15px;
+      border-bottom: 2px solid #007bff;
+      padding-bottom: 10px;
+    }
+  
+    &__intro {
+      margin-bottom: 15px;
+      font-weight: bold;
+    }
+  
+    &__list {
+      padding-left: 20px;
+      margin-bottom: 15px;
+    }
+  
+    &__item {
+      margin-bottom: 10px;
+      line-height: 1.4;
+    }
+  
+    &__footer {
+      font-style: italic;
+      color: #666;
+    }
+  }

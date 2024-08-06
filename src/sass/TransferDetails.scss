@@ -1,0 +1,23 @@
+
+.transfer-details {
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    padding: 20px;
+    margin-top: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  
+    &__item {
+      margin-bottom: 10px;
+      line-height: 1.5;
+    }
+  
+    &__label {
+      color: #333;
+      min-width: 120px;
+      display: inline-block;
+    }
+  
+    &__value {
+      color: #007bff;
+    }
+  }
