@@ -5,10 +5,6 @@ import useHotelSearch from "./useHotelSearch";
 import FlightSummary from "./FlightSummary";
 import HotelList from "./HotelList";
 import HotelDetails from "./HotelDetails";
-<<<<<<< HEAD
-=======
-import ErrorBoundary from "../../components/ErrorBoundary";
->>>>>>> origin/hotels
 import "../../sass/hotelpage.scss";
 
 const HotelPage = () => {
@@ -35,7 +31,6 @@ const HotelPage = () => {
   };
 
   return (
-<<<<<<< HEAD
     <div className="hotel-page">
       <div className="hotel-page__container">
         <h1 className="hotel-page__title">Select a Hotel</h1>
@@ -62,29 +57,6 @@ const HotelPage = () => {
         )}
       </div>
     </div>
-=======
-    <ErrorBoundary>
-      <div className="hotel-page">
-        <div className="hotel-page__container">
-          <h1 className="hotel-page__title">Select a Hotel</h1>
-          <FlightSummary flight={tripCart.flight} />
-          {loading ? (
-            <div className="hotel-page__loading">Loading hotels...</div>
-          ) : error ? (
-            <div className="hotel-page__error">{error}</div>
-          ) : selectedHotel ? (
-            <HotelDetails
-              hotel={selectedHotel}
-              onBack={handleBackToList}
-              onBook={handleBookHotel}
-            />
-          ) : (
-            <HotelList hotels={hotels} onSelect={handleHotelSelect} />
-          )}
-        </div>
-      </div>
-    </ErrorBoundary>
->>>>>>> origin/hotels
   );
 };
 

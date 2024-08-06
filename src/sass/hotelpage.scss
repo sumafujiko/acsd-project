@@ -2,16 +2,7 @@
 @import "mixins";
 
 .hotel-page {
-<<<<<<< HEAD
   background-color: $secondary-color;
-=======
-  // Will change this to look more like refinement + wireframe after I get it it working
-  background-image: linear-gradient(to bottom, transparent, $secondary-color),
-    url("../images/landing-hero-background.jpg"),
-    linear-gradient(to bottom, $secondary-color, $secondary-color);
-  background-size: 100% 100vh, 100% 100vh, 100% auto;
-  background-repeat: no-repeat;
->>>>>>> origin/hotels
   padding: 2rem 0;
   color: $white;
   min-height: 90vh;
@@ -26,7 +17,6 @@
     color: $white;
     margin-bottom: 2rem;
     font-size: 2rem;
-<<<<<<< HEAD
     text-align: left;
   }
 
@@ -41,11 +31,6 @@
     font-size: 3rem;
   }
 
-=======
-    text-align: center;
-  }
-
->>>>>>> origin/hotels
   &__loading,
   &__error {
     @include flex-center;
@@ -111,7 +96,6 @@
     justify-content: space-between;
   }
 
-<<<<<<< HEAD
   // This aint even working but maybe Ill do it later maybe not
   &__btn {
     border-radius: 8px;
@@ -125,8 +109,6 @@
     transform: translateY(-5px);
   }
 
-=======
->>>>>>> origin/hotels
   button {
     padding: 0.5rem 1rem;
     font-size: 1rem;
@@ -149,10 +131,7 @@
   padding: 1rem;
   margin-bottom: 2rem;
   color: $primary-color;
-<<<<<<< HEAD
   text-align: center;
-=======
->>>>>>> origin/hotels
 
   &__segment {
     margin-bottom: 1rem;
