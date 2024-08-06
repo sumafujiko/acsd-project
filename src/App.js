@@ -8,7 +8,6 @@ import HotelPage from "./views/Hotels/HotelPage";
 import TransportPage from "./views/Transport/TransportPage";
 import "./sass/global.scss";
 import { CartContextProvider } from "./contexts/cartContext";
-import TransportPage from "./views/Transport/TransportPage";
 import ConfirmationPage from "./views/Confirmation/ConfirmationPage";
 
 function App() {

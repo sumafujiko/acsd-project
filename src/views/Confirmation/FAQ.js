@@ -1,27 +1,29 @@
-
-import React from 'react';
+import React from "react";
 
 /**
  * FAQ Component
- * 
+ *
  * This component displays a list of frequently asked questions and their answers.
  */
 const FAQ = () => {
   // Array of FAQ objects, each containing a question and an answer
   const faqs = [
-    { 
-      question: "What is your cancellation policy?", 
-      answer: "You can cancel up to 24 hours before your trip for a full refund." 
+    {
+      question: "What is your cancellation policy?",
+      answer:
+        "You can cancel up to 24 hours before your trip for a full refund.",
     },
-    { 
-      question: "How do I change my booking?", 
-      answer: "You can modify your booking through our 'Manage Booking' section using your booking ID." 
+    {
+      question: "How do I change my booking?",
+      answer:
+        "You can modify your booking through our 'Manage Booking' section using your booking ID.",
     },
-    { 
-      question: "What if my flight is delayed?", 
-      answer: "Our transfer providers monitor flight delays. They will wait for you or reschedule as necessary." 
-    }
-    // Additional FAQs to be added..
+    {
+      question: "What if my flight is delayed?",
+      answer:
+        "Our transfer providers monitor flight delays. They will wait for you or reschedule as necessary.",
+    },
+  ];
 
   return (
     <div className="faq">
