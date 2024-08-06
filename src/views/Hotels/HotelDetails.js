@@ -57,14 +57,29 @@ const HotelDetails = ({ hotel, onBack }) => {
         price: hotel.offers[0].price.total,
         currency: hotel.offers[0].price.currency,
         address: hotel.hotel.address,
+        latitude: hotel.hotel.latitude,
+        longitude: hotel.hotel.longitude,
       },
       stayDuration: stayDuration,
+      totalPrice: {
+        flight: tripCart.flight.price,
+        hotel: hotel.offers[0].price.total,
+        currency: hotel.offers[0].price.currency,
+      },
+      dates: {
+        departure: tripCart.flight.outboundFlight[0].departureAt,
+        return: tripCart.flight.returnFlight
+          ? tripCart.flight.returnFlight[0].departureAt
+          : null,
+      },
     };
 
     setTripCart((prevCart) => ({
       ...prevCart,
       hotel: bookingDetails.hotel,
       stayDuration: bookingDetails.stayDuration,
+      totalPrice: bookingDetails.totalPrice,
+      dates: bookingDetails.dates,
     }));
 
     navigate("/transport", { state: { bookingDetails } }); // For transport page

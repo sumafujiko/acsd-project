@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { useCartContext } from '../../contexts/cartContext';
 import TransferSearch from './TransferSearch';
 import TransferResults from './TransferResults';
 import SelectedTransferDetails from './SelectedTransferDetails';
@@ -12,6 +13,7 @@ import '../../sass/transport.scss';
  */
 const TransportPage = () => {
   const location = useLocation();
+  const { tripCart } = useCartContext();
   const navigate = useNavigate();
   const { searchCriteria, selectedFlight } = location.state || {};
 
@@ -87,6 +89,19 @@ const TransportPage = () => {
       setIsLoading(false);
     }
   };
+  // Console log the state passed via navigation
+  useEffect(() => {
+    // Log the state passed via navigation
+    console.log('Booking details passed via state:', location.state?.bookingDetails);
+
+    // Log the entire tripCart
+    console.log('Current tripCart:', tripCart);
+
+    // If you want to log specific details:
+    console.log('Flight details:', tripCart.flight);
+    console.log('Hotel details:', tripCart.hotel);
+    console.log('Stay duration:', tripCart.stayDuration);
+  }, [location, tripCart]);
 
   return (
     <div className="transport-page">
