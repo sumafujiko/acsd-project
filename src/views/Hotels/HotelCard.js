@@ -1,4 +1,5 @@
 import React from "react";
+import { toTitleCase } from "../../utils/stringUtils";
 
 const HotelCard = ({ hotel, onSelect }) => {
   if (!hotel || !hotel.hotel) {
@@ -10,7 +11,9 @@ const HotelCard = ({ hotel, onSelect }) => {
 
   return (
     <div className="hotel-card" onClick={() => onSelect(hotel)}>
-      <h2 className="hotel-card__name">{name || "Hotel Name Not Available"}</h2>
+      <h2 className="hotel-card__name">
+        {name ? toTitleCase(name) : "Hotel Name Not Available"}
+      </h2>
       <p className="hotel-card__price">
         Price per night:{" "}
         {perNight && currency

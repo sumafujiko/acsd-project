@@ -91,10 +91,10 @@ const HotelDetails = ({ hotel, onBack }) => {
       {/*Had a thing for adress here but I couldnt extract it from the API effectively*/}
       <div className="hotel-details__map" ref={mapRef}></div>
       <div className="hotel-details__actions">
-        <button onClick={onBack} className="hotel-details__back-btn">
+        <button onClick={onBack} className="hotel-details__btn">
           Back to List
         </button>
-        <button onClick={handleBookHotel} className="hotel-details__book-btn">
+        <button onClick={handleBookHotel} className="hotel-details__btn">
           Book this hotel
         </button>
       </div>

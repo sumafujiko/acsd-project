@@ -2,11 +2,7 @@
 @import "mixins";
 
 .hotel-page {
-  background-image: linear-gradient(to bottom, transparent, $secondary-color),
-    url("../images/landing-hero-background.jpg"),
-    linear-gradient(to bottom, $secondary-color, $secondary-color);
-  background-size: 100% 100vh, 100% 100vh, 100% auto;
-  background-repeat: no-repeat;
+  background-color: $secondary-color;
   padding: 2rem 0;
   color: $white;
   min-height: 90vh;
@@ -21,7 +17,18 @@
     color: $white;
     margin-bottom: 2rem;
     font-size: 2rem;
+    text-align: left;
+  }
+
+  &__subtitle {
+    color: $white;
+    margin-bottom: 2rem;
+    font-size: 1.5rem;
     text-align: center;
+  }
+
+  h1 {
+    font-size: 3rem;
   }
 
   &__loading,
@@ -89,6 +96,19 @@
     justify-content: space-between;
   }
 
+  // This aint even working but maybe Ill do it later maybe not
+  &__btn {
+    border-radius: 8px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    transition: transform 0.3s ease;
+  }
+
+  &__button:hover {
+    transform: translateY(-5px);
+  }
+
   button {
     padding: 0.5rem 1rem;
     font-size: 1rem;
@@ -111,6 +131,7 @@
   padding: 1rem;
   margin-bottom: 2rem;
   color: $primary-color;
+  text-align: center;
 
   &__segment {
     margin-bottom: 1rem;

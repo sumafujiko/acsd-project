@@ -8,6 +8,7 @@ import {
   getMinReturnDate,
   validatePassengers,
 } from "../../utils/RefinementData";
+import iataCodes from "../Flights/iataCodes";
 
 // RefinementForm component receives initialLocation as a prop from the parent component
 const RefinementForm = ({ initialLocation }) => {
@@ -23,7 +24,22 @@ const RefinementForm = ({ initialLocation }) => {
   // State for storing validation errors
   const [errors, setErrors] = useState({});
 
-  // Generic handler for input changes
+  // Create an array of city options for the dropdown
+  const cityOptions = Object.keys(iataCodes).map((city) => ({
+    label: city,
+    value: city,
+  }));
+
+  // Handler for dropdown changes
+  const handleLocationChange = (e) => {
+    const { value } = e.target;
+    setFormData((prevState) => ({
+      ...prevState,
+      location: value,
+    }));
+  };
+
+  // Generic handler for other input changes
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevState) => ({
@@ -70,19 +86,26 @@ const RefinementForm = ({ initialLocation }) => {
 
   return (
     <form onSubmit={handleSubmit} className="refinement-page__form">
-      {/* Location input */}
+      {/* Location dropdown */}
       <div className="form-section">
         <div className="form-group form-group--city">
           <label htmlFor="location">City:</label>
-          <input
-            type="text"
+          <select
             id="location"
             name="location"
             value={formData.location}
-            onChange={handleInputChange}
-            placeholder="Enter a city or country"
+            onChange={handleLocationChange}
             required
-          />
+          >
+            <option value="" disabled>
+              Select a city
+            </option>
+            {cityOptions.map((option) => (
+              <option key={option.value} value={option.value}>
+                {option.label}
+              </option>
+            ))}
+          </select>
         </div>
 
         {/* Date inputs */}

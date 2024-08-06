@@ -1,5 +1,6 @@
 import React from "react";
 import HotelCard from "./HotelCard";
+import { toTitleCase } from "../../utils/stringUtils";
 
 const HotelList = ({ hotels, onSelect }) => {
   console.log("Hotels in HotelList:", hotels);
@@ -14,13 +15,17 @@ const HotelList = ({ hotels, onSelect }) => {
 
   return (
     <div className="hotel-list">
-      {hotels.map((hotel) => (
-        <HotelCard
-          key={hotel.hotel.hotelId}
-          hotel={hotel}
-          onSelect={onSelect}
-        />
-      ))}
+      {hotels.map((hotel) => {
+        const formattedName = toTitleCase(hotel.hotel.name);
+
+        return (
+          <HotelCard
+            key={hotel.hotel.hotelId}
+            hotel={{ ...hotel, hotel: { ...hotel.hotel, name: formattedName } }}
+            onSelect={onSelect}
+          />
+        );
+      })}
     </div>
   );
 };

@@ -115,7 +115,7 @@
 
     .image-credit {
       @include image-credit;
-      font-size: 0.6rem; // Slightly smaller for destination images (Paris, Tokyo, New York)
+      font-size: 0.6rem;
     }
   }
 
@@ -126,11 +126,13 @@
       margin-top: 0;
       margin-bottom: $spacing-small;
       color: $primary-color;
+      font-size: 1.5rem;
     }
 
     p {
       margin-bottom: $spacing-small;
       color: $primary-color;
+      font-size: 1rem;
     }
   }
 
@@ -174,7 +176,7 @@
 @include responsive($breakpoint-mobile) {
   .landing-page {
     &__hero-slogan {
-      font-size: 3rem; // Smaller font size for mobile
+      font-size: 3rem;
       margin-bottom: $spacing-large;
     }
 
@@ -189,6 +191,69 @@
         border-radius: 0 0 $border-radius $border-radius;
         margin-top: $spacing-small;
       }
+    }
+
+    // New responsive styles for destinations
+    &__destinations {
+      h2 {
+        font-size: 2.5rem;
+        text-align: center;
+      }
+    }
+
+    &__destinations-grid {
+      flex-direction: column;
+      align-items: center;
+    }
+
+    &__destination-card {
+      width: 90%;
+      max-width: 400px;
+    }
+
+    &__destination-content {
+      h3 {
+        font-size: 1.3rem;
+      }
+
+      p {
+        font-size: 0.9rem;
+      }
+    }
+  }
+}
+
+// Medium-sized screens
+@media (min-width: $breakpoint-mobile) and (max-width: 1024px) {
+  .landing-page {
+    &__destinations {
+      h2 {
+        font-size: 3rem;
+      }
+    }
+
+    &__destinations-grid {
+      justify-content: center;
+    }
+
+    &__destination-card {
+      width: calc(50% - #{$spacing-medium});
+      max-width: 350px;
+    }
+  }
+}
+
+// Large screens
+@media (min-width: 1025px) {
+  .landing-page {
+    &__destinations {
+      h2 {
+        font-size: $spacing-xlarge;
+      }
+    }
+
+    &__destination-card {
+      width: calc(33.33% - #{$spacing-medium});
     }
   }
 }
