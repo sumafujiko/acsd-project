@@ -169,3 +169,51 @@ export const searchFlights = async (
     throw error;
   }
 };
+
+export const searchTransfers = async (searchParams) => {
+  try {
+    const token = await getAccessToken();
+
+    console.log("Searching transfers with params:", searchParams);
+
+    const response = await amadeus.post(
+      "/v1/shopping/transfer-offers",
+      {
+        startLocationCode: searchParams.startLocationCode,
+        endAddressLine: searchParams.endName,
+        startDateTime: searchParams.startDateTime,
+        passengers: searchParams.passengers,
+        endLatitude: searchParams.endLatitude,
+        endLongitude: searchParams.endLongitude,
+        transferType: "PRIVATE", // You might want to make this configurable
+      },
+      {
+        headers: { Authorization: `Bearer ${token}` },
+      }
+    );
+
+    console.log("Received transfer offers:", response.data);
+
+    return response.data.data.map((offer) => ({
+      id: offer.id,
+      transferType: offer.transferType,
+      vehicle: offer.vehicle,
+      start: offer.start,
+      end: offer.end,
+      price: offer.quotation.monetaryAmount,
+      currency: offer.quotation.currencyCode,
+    }));
+  } catch (error) {
+    console.error("Error searching transfers:", error);
+    if (error.response) {
+      console.error("Error response:", error.response.data);
+      console.error("Error status:", error.response.status);
+      throw new Error(
+        `Transfer search failed: ${
+          error.response.data.errors?.[0]?.detail || error.message
+        }`
+      );
+    }
+    throw error;
+  }
+};

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useCartContext } from "../../contexts/cartContext";
 import TripSummary from "../../contexts/TripSummary";
@@ -6,52 +6,43 @@ import TransferSearch from "./TransferSearch";
 import TransferResults from "./TransferResults";
 import SelectedTransferDetails from "./SelectedTransferDetails";
 import TransportTips from "./TransportTips";
-import {
-  searchTransfers,
-  bookTransfer,
-  safeApiCall,
-} from "../../api/amadeusApi";
+import { searchTransfers, safeApiCall } from "../../api/amadeusApi";
 import "../../sass/transport.scss";
 
-/**
- * TransportPage component handles the transfer search and booking process
- */
 const TransportPage = () => {
   const location = useLocation();
   const { tripCart } = useCartContext();
   const navigate = useNavigate();
-  const { searchCriteria, selectedFlight } = location.state || {};
 
-  const [searchResults, setSearchResults] = React.useState([]);
-  const [selectedTransfer, setSelectedTransfer] = React.useState(null);
-  const [isLoading, setIsLoading] = React.useState(false);
-  const [error, setError] = React.useState(null);
+  const [searchParams, setSearchParams] = useState({
+    startLocationCode: "",
+    endLocationCode: "",
+    startDateTime: "",
+    passengers: 1,
+    endLatitude: "",
+    endLongitude: "",
+    endName: "",
+  });
+  const [searchResults, setSearchResults] = useState([]);
+  const [selectedTransfer, setSelectedTransfer] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
 
-  // Calculate stay duration
-  const calculateStayDuration = () => {
-    if (
-      tripCart.flight &&
-      tripCart.flight.outboundFlight &&
-      tripCart.flight.returnFlight
-    ) {
-      const checkInDate = new Date(
-        tripCart.flight.outboundFlight[0].departureAt
-      );
-      const checkOutDate = new Date(
-        tripCart.flight.returnFlight[0].departureAt
-      );
-      return Math.ceil((checkOutDate - checkInDate) / (1000 * 60 * 60 * 24));
+  useEffect(() => {
+    if (tripCart.flight && tripCart.hotel) {
+      setSearchParams({
+        startLocationCode: tripCart.flight.outboundFlight[0].arrivalAirport,
+        endLocationCode: tripCart.hotel.cityCode,
+        startDateTime: tripCart.flight.outboundFlight[0].arrivalAt,
+        passengers: tripCart.adults + tripCart.children + tripCart.infants,
+        endLatitude: tripCart.hotel.latitude,
+        endLongitude: tripCart.hotel.longitude,
+        endName: tripCart.hotel.name,
+      });
     }
-    return 0;
-  };
+  }, [tripCart]);
 
-  const stayDuration = calculateStayDuration();
-
-  /**
-   * Handles the search results from the TransferSearch component
-   * @param {Object} searchParams - The search parameters for transfers
-   */
-  const handleSearchResults = async (searchParams) => {
+  const handleSearchResults = async () => {
     setIsLoading(true);
     setError(null);
     try {
@@ -65,71 +56,15 @@ const TransportPage = () => {
     }
   };
 
-  /**
-   * Handles the selection of a transfer option
-   * @param {Object} transfer - The selected transfer option
-   */
   const handleSelectTransfer = (transfer) => {
     setSelectedTransfer(transfer);
   };
 
-  /**
-   * Handles the booking of the selected transfer
-   */
   const handleBookTransfer = async () => {
-    if (!selectedTransfer) return;
-    setIsLoading(true);
-    setError(null);
-    try {
-      const bookingData = {
-        transferType: selectedTransfer.transferType,
-        start: selectedTransfer.start,
-        end: selectedTransfer.end,
-        passengerCharacteristics: [
-          { passengerTypeCode: "ADT", count: searchCriteria.adults },
-          { passengerTypeCode: "CHD", count: searchCriteria.children },
-          { passengerTypeCode: "INF", count: searchCriteria.infants },
-        ],
-      };
-      const bookingConfirmation = await safeApiCall(bookTransfer, bookingData);
-
-      // Navigate to the confirmation page with the booking details
-      navigate("/confirmation", {
-        state: {
-          bookingConfirmation,
-          searchCriteria,
-          selectedFlight,
-          selectedTransfer,
-          locationData: {
-            name: searchCriteria.location,
-            latitude: selectedTransfer.start?.latitude,
-            longitude: selectedTransfer.start?.longitude,
-          },
-        },
-      });
-    } catch (error) {
-      setError("Failed to book the transfer. Please try again.");
-      console.error("Book transfer error:", error);
-    } finally {
-      setIsLoading(false);
-    }
+    // Implement booking logic here
+    console.log("Booking transfer:", selectedTransfer);
+    // Navigate to confirmation page or next step
   };
-  // Console log the state passed via navigation
-  useEffect(() => {
-    // Log the state passed via navigation
-    console.log(
-      "Booking details passed via state:",
-      location.state?.bookingDetails
-    );
-
-    // Log the entire tripCart
-    console.log("Current tripCart:", tripCart);
-
-    // If you want to log specific details:
-    console.log("Flight details:", tripCart.flight);
-    console.log("Hotel details:", tripCart.hotel);
-    console.log("Stay duration:", tripCart.stayDuration);
-  }, [location, tripCart]);
 
   return (
     <div className="transport-page">
@@ -137,41 +72,98 @@ const TransportPage = () => {
 
       <TripSummary tripCart={tripCart} />
 
-      <TransferSearch
-        onSearchResults={handleSearchResults}
-        initialData={{
-          arrivalAirport: tripCart.flight?.outboundFlight[0]?.arrivalAirport,
-          arrivalDate: tripCart.flight?.outboundFlight[0]?.arrivalAt,
-          hotelLatitude: tripCart.hotel?.latitude,
-          hotelLongitude: tripCart.hotel?.longitude,
-          passengers: {
-            adults: tripCart.adults || 1,
-            children: tripCart.children || 0,
-            infants: tripCart.infants || 0,
-          },
-        }}
-      />
+      <div className="transport-container">
+        <div className="transfer-search-column">
+          <form
+            className="transfer-search-form"
+            onSubmit={(e) => {
+              e.preventDefault();
+              handleSearchResults();
+            }}
+          >
+            <div className="form-group">
+              <label htmlFor="startLocationCode">Start Location Code</label>
+              <input
+                id="startLocationCode"
+                type="text"
+                value={searchParams.startLocationCode}
+                onChange={(e) =>
+                  setSearchParams({
+                    ...searchParams,
+                    startLocationCode: e.target.value,
+                  })
+                }
+                placeholder="Start Location Code"
+              />
+            </div>
+            <div className="form-group">
+              <label htmlFor="endName">End Location Name</label>
+              <input
+                id="endName"
+                type="text"
+                value={searchParams.endName}
+                onChange={(e) =>
+                  setSearchParams({ ...searchParams, endName: e.target.value })
+                }
+                placeholder="End Location Name"
+              />
+            </div>
+            <div className="form-group">
+              <label htmlFor="startDateTime">Start Date & Time</label>
+              <input
+                id="startDateTime"
+                type="datetime-local"
+                value={searchParams.startDateTime}
+                onChange={(e) =>
+                  setSearchParams({
+                    ...searchParams,
+                    startDateTime: e.target.value,
+                  })
+                }
+              />
+            </div>
+            <div className="form-group">
+              <label htmlFor="passengers">Number of Passengers</label>
+              <input
+                id="passengers"
+                type="number"
+                value={searchParams.passengers}
+                onChange={(e) =>
+                  setSearchParams({
+                    ...searchParams,
+                    passengers: parseInt(e.target.value),
+                  })
+                }
+                min="1"
+              />
+            </div>
+            <button className="search-button" type="submit">
+              Search Transfers
+            </button>
+          </form>
+        </div>
 
-      {isLoading && <p>Loading...</p>}
+        <div className="transfer-results-column">
+          {isLoading && <p>Loading...</p>}
+          {error && <p className="error-message">{error}</p>}
 
-      {error && <p className="error-message">{error}</p>}
+          {!isLoading && !error && searchResults.length > 0 && (
+            <TransferResults
+              results={searchResults}
+              onSelect={handleSelectTransfer}
+            />
+          )}
 
-      {!isLoading && !error && searchResults.length > 0 && (
-        <TransferResults
-          results={searchResults}
-          onSelect={handleSelectTransfer}
-        />
-      )}
-
-      {selectedTransfer && (
-        <SelectedTransferDetails
-          transfer={selectedTransfer}
-          onBook={handleBookTransfer}
-        />
-      )}
-      <div className="transport-tips">
-        <TransportTips />
+          {selectedTransfer && (
+            <SelectedTransferDetails
+              transfer={selectedTransfer}
+              onBook={handleBookTransfer}
+            />
+          )}
+        </div>
       </div>
+
+      <TransportTips />
     </div>
   );
 };
