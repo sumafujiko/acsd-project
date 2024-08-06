@@ -31,62 +31,78 @@
     background-color: rgba($white, 0.1);
     border-radius: 8px;
     padding: 1rem;
+    max-width: 500px;
   }
 
   .transfer-search-form {
-    background-color: rgba($white, 0.1);
+    background-color: $white;
     border-radius: 8px;
     padding: 2rem;
-    display: flex;
-    flex-direction: column;
-  }
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 
-  .form-group {
-    margin-bottom: 1.5rem;
+    .form-section {
+      margin-bottom: 2rem;
+      padding-bottom: 2rem;
+      border-bottom: 1px solid $secondary-color;
 
-    label {
-      display: block;
-      margin-bottom: 0.5rem;
-      font-weight: bold;
+      &:last-child {
+        border-bottom: none;
+        margin-bottom: 0;
+        padding-bottom: 0;
+      }
     }
 
-    input {
-      width: 100%;
-      padding: 0.75rem;
-      border: 1px solid rgba($white, 0.3);
-      border-radius: 4px;
-      background-color: rgba($white, 0.1);
-      color: $white;
-      box-sizing: border-box;
+    .form-group {
+      margin-bottom: 1rem;
 
-      &:focus {
-        border-color: $accent-color;
-        outline: none;
+      label {
+        display: block;
+        margin-bottom: 0.5rem;
+        font-weight: bold;
+        color: $primary-color;
+      }
+
+      input,
+      select {
+        width: 100%;
+        padding: 0.5rem;
+        border: 1px solid $secondary-color;
+        border-radius: 4px;
+        font-size: 1rem;
+
+        &:focus {
+          outline: none;
+          border-color: $primary-color;
+        }
+      }
+    }
+
+    .search-button {
+      width: 100%;
+      padding: 1rem;
+      font-size: 1.1rem;
+      margin-top: 2rem;
+      background-color: $primary-color;
+      color: $white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+
+      &:hover {
+        background-color: darken($primary-color, 10%);
       }
     }
   }
 
-  .search-button {
-    background-color: $accent-color;
-    color: $white;
-    border: none;
-    border-radius: 4px;
-    padding: 0.75rem 1.5rem;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: background-color 0.3s;
-
-    &:hover {
-      background-color: darken($accent-color, 10%);
-    }
-
-    &:active {
-      background-color: darken($accent-color, 20%);
-    }
+  .transfer-results {
+    background-color: $white;
+    border-radius: 8px;
+    padding: 1rem;
   }
 
   .transport-tips {
-    background-color: rgba($white, 0.1);
+    background-color: $white;
     padding: 1.5rem;
     border-radius: 8px;
     margin-top: 2rem;
@@ -101,48 +117,83 @@
     }
   }
 
-  .booking-confirmation {
-    background-color: rgba($white, 0.1);
-    padding: 2rem;
-    border-radius: 8px;
-    max-width: 600px;
-    margin: 2rem auto;
+}
+.search-button {
+  background-color: $accent-color;
+  color: $white;
+  border: none;
+  border-radius: 4px;
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
 
-    &__error {
-      color: #ff6b6b;
-      font-weight: bold;
+  &:hover {
+    background-color: darken($accent-color, 10%);
+  }
+
+  &:active {
+    background-color: darken($accent-color, 20%);
+  }
+}
+
+.transport-tips {
+  color: $primary-color;
+  padding: 1.5rem;
+  border-radius: 8px;
+  margin: 2rem;
+
+  h2 {
+    margin-bottom: 1rem;
+    color: $primary-color;
+  }
+
+  ul {
+    padding-left: 1.5rem;
+  }
+}
+
+.booking-confirmation {
+  background-color: rgba($white, 0.1);
+  padding: 2rem;
+  border-radius: 8px;
+  max-width: 600px;
+  margin: 2rem auto;
+
+  &__error {
+    color: #ff6b6b;
+    font-weight: bold;
+  }
+
+  &__title {
+    color: $primary-color;
+    margin-bottom: 1.5rem;
+  }
+
+  &__detail {
+    margin-bottom: 1rem;
+  }
+
+  &__link,
+  &__calendar-button {
+    display: inline-block;
+    margin-top: 1.5rem;
+    padding: 0.75rem 1.5rem;
+    background-color: $accent-color;
+    color: $white;
+    text-decoration: none;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+
+    &:hover {
+      background-color: darken($accent-color, 10%);
     }
+  }
 
-    &__title {
-      color: $accent-color;
-      margin-bottom: 1.5rem;
-    }
-
-    &__detail {
-      margin-bottom: 1rem;
-    }
-
-    &__link,
-    &__calendar-button {
-      display: inline-block;
-      margin-top: 1.5rem;
-      padding: 0.75rem 1.5rem;
-      background-color: $accent-color;
-      color: $white;
-      text-decoration: none;
-      border-radius: 4px;
-      transition: background-color 0.3s;
-
-      &:hover {
-        background-color: darken($accent-color, 10%);
-      }
-    }
-
-    &__calendar-button {
-      margin-left: 1rem;
-      border: none;
-      cursor: pointer;
-    }
+  &__calendar-button {
+    margin-left: 1rem;
+    border: none;
+    cursor: pointer;
   }
 }
 

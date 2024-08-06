@@ -1,7 +1,3 @@
-// I have had so many problems getting this working correctly, hotel name and geolocation are the only things I got working consistently
-// Because of that I picked random price for the hotel, trying to get something from the API at least
-// There are a lot of console.logs in the code some are relics from debugging, Ill trim em down later
-// Also based on console logs when you click on a hotel card it seacrhes for hotels again so maybe unnecessary API calls
 import axios from "axios";
 
 const API_KEY = process.env.REACT_APP_AMADEUS_API_KEY;
@@ -180,15 +176,17 @@ export const searchTransfers = async (searchParams) => {
       "/v1/shopping/transfer-offers",
       {
         startLocationCode: searchParams.startLocationCode,
-        endAddressLine: searchParams.endName,
+        endAddressLine: searchParams.endAddressLine,
         startDateTime: searchParams.startDateTime,
-        passengers: searchParams.passengers,
+        passengerQuantity: searchParams.passengerQuantity,
         endLatitude: searchParams.endLatitude,
         endLongitude: searchParams.endLongitude,
-        transferType: "PRIVATE", // You might want to make this configurable
       },
       {
-        headers: { Authorization: `Bearer ${token}` },
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
       }
     );
 
