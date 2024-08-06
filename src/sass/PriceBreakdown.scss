@@ -1,0 +1,56 @@
+// PriceBreakdown.scss
+
+.price-breakdown {
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    padding: 20px;
+    margin-top: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  
+    &__title {
+      font-size: 1.5rem;
+      color: #333;
+      margin-bottom: 15px;
+      border-bottom: 2px solid #007bff;
+      padding-bottom: 10px;
+    }
+  
+    &__list {
+      list-style-type: none;
+      padding: 0;
+    }
+  
+    &__item {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 10px;
+      font-size: 1.1rem;
+    }
+  
+    &__label {
+      color: #555;
+    }
+  
+    &__price {
+      font-weight: bold;
+      color: #28a745;
+    }
+  
+    &__total {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 15px;
+      padding-top: 15px;
+      border-top: 2px solid #007bff;
+      font-size: 1.2rem;
+      font-weight: bold;
+    }
+  
+    &__total-label {
+      color: #333;
+    }
+  
+    &__total-price {
+      color: #dc3545;
+    }
+  }

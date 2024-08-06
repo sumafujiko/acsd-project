@@ -8,6 +8,8 @@ import HotelPage from "./views/Hotels/HotelPage";
 import TransportPage from "./views/Transport/TransportPage";
 import "./sass/global.scss";
 import { CartContextProvider } from "./contexts/cartContext";
+import TransportPage from "./views/Transport/TransportPage";
+import ConfirmationPage from "./views/Confirmation/ConfirmationPage";
 
 function App() {
   return (
@@ -21,6 +23,7 @@ function App() {
             <Route path="hotels" element={<HotelPage />} />
             <Route path="transport" element={<TransportPage />} />
             <Route path="payments" element={<PaymentPage />} />
+            <Route path="confirmation" element={<ConfirmationPage />} />
           </Route>
         </Routes>
       </CartContextProvider>
