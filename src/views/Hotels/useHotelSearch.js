@@ -1,5 +1,3 @@
-// src/views/Hotels/useHotelSearch.js
-
 import { useState, useEffect } from 'react';
 import { searchHotels } from '../../utils/amadeusApi';
 
