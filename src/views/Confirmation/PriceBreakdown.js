@@ -18,7 +18,7 @@ const PriceBreakdown = ({ flightData, hotelData, transferData }) => {
   const flightPrice = flightData?.price || 0;
   const hotelPrice = hotelData?.price || 0;
   const transferPrice = transferData?.price || 0;
-  console.log(flightPrice, hotelPrice, transferPrice);
+
   // Calculate total price
   const totalPrice = flightPrice + hotelPrice + transferPrice;
 

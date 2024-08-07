@@ -14,8 +14,6 @@ const HotelPage = () => {
   const { hotels, loading, error } = useHotelSearch(tripCart.flight);
   const [selectedHotel, setSelectedHotel] = useState(null);
 
-  console.log(location.state);
-
   // Handler for selecting a hotel
   const handleHotelSelect = (hotel) => {
     setSelectedHotel(hotel);

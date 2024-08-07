@@ -20,7 +20,7 @@ const cardValidation = yup.object({
     .test(
       "length",
       "Exp Month Must be 2 digits",
-      (val) => val && val.toString().length === 2
+      (val) => val && val.toString().padStart(2, "0").length === 2
     ),
   expYear: yup
     .number()
