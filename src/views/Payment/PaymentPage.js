@@ -1,4 +1,6 @@
 import { useContext, useState } from "react";
+import { useNavigate } from "react-router-dom";
+
 import { CartContext } from "../../contexts/cartContext";
 
 import "../../sass/payment.scss";
@@ -9,6 +11,8 @@ const PaymentPage = () => {
   const { tripCart } = useContext(CartContext);
   const [cardDetails, setCardDetails] = useState({});
   const [errors, setErrors] = useState({ fullName: "Something" });
+  const navigate = useNavigate();
+
   const flightPrice = tripCart.flight?.price ?? 100;
   const hotelPrice = tripCart.flight?.price ?? 100;
   const tranferPrice = tripCart.flight?.price ?? 100;
@@ -35,7 +39,8 @@ const PaymentPage = () => {
     );
     if (!validateResult) return;
 
-    console.log("Successfully Purchased");
+    alert("Succcessfully Purchased");
+    navigate("/confirmation");
   };
 
   return (

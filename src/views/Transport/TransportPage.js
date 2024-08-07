@@ -54,18 +54,23 @@ const TransportPage = () => {
   const handleSearchResults = async (searchParams) => {
     setIsLoading(true);
     setError(null);
+    console.log(
+      "startDate time ",
+      tripCart.flight?.outboundFlight[0]?.arrivalAt
+    );
+
     try {
       const results = await safeApiCall(searchTransfers, searchParams);
+
       const parsedResults = await results.data?.map((result) => ({
         price: result?.converted?.monetaryAmount,
-        start: result?.start?.dateTime,
+        startDateTime: result?.start?.dateTime,
         vehicle: result?.vehicle.code,
         vehicleDesc: result?.vehicle.description,
+        id: result?.id,
       }));
-      console.log(parsedResults, "PARSED RESULTS");
-      setSearchResults(parsedResults ?? []);
 
-      console.log(results, "RESULTS FROM handle search results");
+      setSearchResults(parsedResults ?? []);
     } catch (error) {
       setError("Failed to fetch transfer options. Please try again.");
       console.error("Search transfers error:", error);
@@ -81,9 +86,8 @@ const TransportPage = () => {
       endLongitude: tripCart.hotel?.longitude,
       startDateTime: tripCart.flight?.outboundFlight[0]?.arrivalAt,
       passengerQuantity:
-        tripCart.adults || 1 + tripCart.children || 0 + tripCart.infants || 0,
+        tripCart.adults || 0 + tripCart.children || 0 + tripCart.infant || 0,
     };
-    console.log(searchParams, "search Params");
     handleSearchResults(searchParams);
   }, [tripCart]);
 

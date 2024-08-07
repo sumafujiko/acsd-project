@@ -12,9 +12,9 @@ export const getAccessToken = async () => {
     const response = await axios.post(
       `${BASE_URL}/v1/security/oauth2/token`,
       "grant_type=client_credentials&client_id=" +
-        process.env.REACT_APP_AMADEUS_API_KEY +
+        API_KEY +
         "&client_secret=" +
-        process.env.REACT_APP_AMADEUS_API_SECRET,
+        API_SECRET,
       {
         headers: {
           "Content-Type": "application/x-www-form-urlencoded",
@@ -61,9 +61,11 @@ export const safeApiCall = async (apiFunction, ...args) => {
 
 //we dont need to catch and throw the error again.  Thrown errors will be caught in the safe api call catch block
 export const searchTransfers = async (searchCriteria) => {
-  const response = await amadeusApi.post("v1/shopping/transfer-offers", {
-    body: searchCriteria,
-  });
+  const response = await amadeusApi.post(
+    "/v1/shopping/transfer-offers",
+    searchCriteria
+  );
+  console.log(response, "response inside search transfers");
   return response.data;
 };
 
@@ -100,7 +102,6 @@ export const getCityCode = async (cityName) => {
 };
 
 export const getFlights = async (searchParams) => {
-  console.log(searchParams);
   const response = await amadeusApi.get("/v2/shopping/flight-offers", {
     params: searchParams,
   });

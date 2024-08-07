@@ -88,7 +88,9 @@ const FlightDetailsSorter = ({ originalData, setFlights }) => {
           >
             <option value="">None Selected</option>
             {Array.from(airportSet).map((airport) => (
-              <option value={airport}>{airport}</option>
+              <option value={airport} key={airport}>
+                {airport}
+              </option>
             ))}
           </select>
           <label htmlFor="airportSelect">Airport</label>

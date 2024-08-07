@@ -25,7 +25,6 @@ const HotelPage = () => {
 
   // Handler for booking a hotel and proceeding to transport page
   const handleBookHotel = (hotel) => {
-    console.log("HANDLING BOOKING HOTEL", hotel);
     setTripCart((prev) => ({ ...prev, hotel: hotel }));
     navigate("/transport");
   };

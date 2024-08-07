@@ -1,6 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
 
+import "../../sass/transferResults.scss";
+
 /**
  * TransferResults component
  * Displays a list of available transfer options and allows selection
@@ -29,15 +31,9 @@ const TransferResults = ({ results, onSelect }) => {
             <p className="transfer-option__detail">
               From: {transfer.vehicleDesc}
             </p>
-            {/* <p className="transfer-option__detail">
-              To: {transfer.end.locationName}
-            </p> */}
             <p className="transfer-option__detail">
-              Date: {new Date(transfer.start).toLocaleDateString()}
+              Date: {new Date(transfer.startDateTime).toLocaleDateString()}
             </p>
-            {/* <p className="transfer-option__detail">
-              Time: {new Date(transfer.startDateTime).toLocaleTimeString()}
-            </p> */}
             <p className="transfer-option__price">Price: €{transfer.price}</p>
             <button
               className="transfer-option__select-btn"

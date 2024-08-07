@@ -66,12 +66,10 @@ const FlightPage = () => {
     } finally {
       setLoading(false);
     }
-  }, [abortController, searchCriteria]);
+  }, [searchCriteria]);
 
   useEffect(() => {
     handleFetchFlights();
-    //useEffect cleanup function happens in its return.  We stop the fetch request if the page unmounts
-    // return () => abortController.abort();
   }, [handleFetchFlights, abortController]);
 
   const determineHeaderStatement = () => {
