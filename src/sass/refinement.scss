@@ -16,6 +16,8 @@
     color: $white;
     margin-bottom: 2rem;
     font-size: 2rem;
+    display: flex;
+    justify-content: left;
   }
 
   &__form {
