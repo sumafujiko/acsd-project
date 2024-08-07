@@ -20,7 +20,8 @@ const PriceBreakdown = ({ flightData, hotelData, transferData }) => {
   const transferPrice = transferData?.price || 0;
 
   // Calculate total price
-  const totalPrice = flightPrice + hotelPrice + transferPrice;
+  const totalPrice =
+    Number(flightPrice) + Number(hotelPrice) + Number(transferPrice);
 
   /**
    * Formats a number as a price string
@@ -65,6 +66,7 @@ const PriceBreakdown = ({ flightData, hotelData, transferData }) => {
         <span className="price-breakdown__total-label">Total</span>
         <span className="price-breakdown__total-price">
           {formatPrice(totalPrice)}
+          {console.log(totalPrice)}
         </span>
       </div>
     </div>
