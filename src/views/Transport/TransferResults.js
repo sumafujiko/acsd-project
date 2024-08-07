@@ -19,8 +19,6 @@ const TransferResults = ({ results, onSelect }) => {
     );
   }
 
-  console.log(results);
-
   return (
     <div className="transfer-results">
       <h2 className="transfer-results__title">Available Transfers</h2>

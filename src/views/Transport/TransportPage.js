@@ -54,10 +54,6 @@ const TransportPage = () => {
   const handleSearchResults = async (searchParams) => {
     setIsLoading(true);
     setError(null);
-    console.log(
-      "startDate time ",
-      tripCart.flight?.outboundFlight[0]?.arrivalAt
-    );
 
     try {
       const results = await safeApiCall(searchTransfers, searchParams);
@@ -80,15 +76,16 @@ const TransportPage = () => {
   };
 
   useEffect(() => {
-    console.log(tripCart, "trip cart before doing search params");
-    console.log(location.state, "location.state");
     const searchParams = {
       startLocationCode: tripCart.flight?.outboundFlight[0]?.arrivalAirport,
       endLatitude: tripCart.hotel?.latitude,
       endLongitude: tripCart.hotel?.longitude,
       startDateTime: tripCart.flight?.outboundFlight[0]?.arrivalAt,
       passengerQuantity:
-        tripCart.adults || 0 + tripCart.children || 0 + tripCart.infant || 0,
+        location.state?.adults ||
+        0 + location.state?.children ||
+        0 + location.state?.infant ||
+        0,
     };
     handleSearchResults(searchParams);
   }, [tripCart]);
