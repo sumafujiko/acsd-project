@@ -13,12 +13,10 @@ const PaymentPage = () => {
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
 
-  console.log(tripCart, "tripcart");
-
-  const flightPrice = parseInt(tripCart.flight?.price);
-  const hotelPrice = parseInt(tripCart.hotel?.price);
-  const tranferPrice = parseInt(tripCart.transfer?.price);
-  const totalPrice = parseInt(flightPrice + tranferPrice) + hotelPrice;
+  const flightPrice = parseFloat(tripCart.flight?.price);
+  const hotelPrice = parseFloat(tripCart.hotel?.price);
+  const tranferPrice = parseFloat(tripCart.transfer?.price);
+  const totalPrice = parseFloat(flightPrice + tranferPrice) + hotelPrice;
 
   const handleChange = (e) => {
     e.preventDefault();
