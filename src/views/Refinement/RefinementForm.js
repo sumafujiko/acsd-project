@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   initialFormData,
@@ -6,15 +6,17 @@ import {
   priceRangeConfig,
   getMinDepartureDate,
   getMinReturnDate,
-  validatePassengers,
+  refinementValidation,
 } from "../../utils/RefinementData";
+import { handleYupValidation } from "../../utils";
 import iataCodes from "../Flights/iataCodes";
 
 // RefinementForm component receives initialLocation as a prop from the parent component
 const RefinementForm = ({ initialLocation }) => {
   const navigate = useNavigate();
+  const formRef = useRef(null);
 
-  // Initialize form data with default values and the initial location
+  // Initialise form data with default values and the initial location
   const [formData, setFormData] = useState({
     ...initialFormData,
     location: initialLocation,
@@ -23,12 +25,20 @@ const RefinementForm = ({ initialLocation }) => {
 
   // State for storing validation errors
   const [errors, setErrors] = useState({});
+  const [isSubmitted, setIsSubmitted] = useState(false);
 
   // Create an array of city options for the dropdown
   const cityOptions = Object.keys(iataCodes).map((city) => ({
     label: city,
     value: city,
   }));
+
+  // Effect for scrolling to top when errors appear
+  useEffect(() => {
+    if (isSubmitted && Object.keys(errors).length > 0) {
+      formRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  }, [errors, isSubmitted]);
 
   // Handler for dropdown changes
   const handleLocationChange = (e) => {
@@ -61,31 +71,38 @@ const RefinementForm = ({ initialLocation }) => {
   };
 
   // Form submission handler
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsSubmitted(true);
 
-    // Validate passengers (Logic in RefinementData.js)
-    const passengerValidation = validatePassengers(
-      formData.adults,
-      formData.children,
-      formData.infants
+    const isValid = await handleYupValidation(
+      formData,
+      refinementValidation,
+      setErrors
     );
 
-    // If passenger configuration is invalid, set error and stop submission
-    if (!passengerValidation.valid) {
-      setErrors({ passengers: passengerValidation.message });
-      return;
+    if (isValid) {
+      navigate("/flights", { state: { searchCriteria: formData } });
     }
-
-    // Clear any previous errors
-    setErrors({});
-
-    // Navigate to the FlightPage with the form data
-    navigate("/flights", { state: { searchCriteria: formData } });
   };
 
   return (
-    <form onSubmit={handleSubmit} className="refinement-page__form">
+    <form
+      ref={formRef}
+      onSubmit={handleSubmit}
+      className="refinement-page__form"
+    >
+      {isSubmitted && Object.keys(errors).length > 0 && (
+        <div className="error-summary">
+          Please correct the following errors:
+          <ul>
+            {Object.values(errors).map((error, index) => (
+              <li key={index}>{error}</li>
+            ))}
+          </ul>
+        </div>
+      )}
+
       {/* Location dropdown */}
       <div className="form-section">
         <div className="form-group form-group--city">
@@ -106,36 +123,43 @@ const RefinementForm = ({ initialLocation }) => {
               </option>
             ))}
           </select>
+          {isSubmitted && errors.location && (
+            <div className="error-message">{errors.location}</div>
+          )}
         </div>
 
         {/* Date inputs */}
-        <div className="form-section">
-          <div className="form-date-container">
-            <div className="form-group form-group--date">
-              <label htmlFor="departureDate">Departure:</label>
-              <input
-                type="date"
-                id="departureDate"
-                name="departureDate"
-                value={formData.departureDate}
-                onChange={handleInputChange}
-                min={getMinDepartureDate()}
-                required
-              />
-            </div>
+        <div className="form-date-container">
+          <div className="form-group form-group--date">
+            <label htmlFor="departureDate">Departure:</label>
+            <input
+              type="date"
+              id="departureDate"
+              name="departureDate"
+              value={formData.departureDate}
+              onChange={handleInputChange}
+              min={getMinDepartureDate()}
+              required
+            />
+            {isSubmitted && errors.departureDate && (
+              <div className="error-message">{errors.departureDate}</div>
+            )}
+          </div>
 
-            <div className="form-group form-group--date">
-              <label htmlFor="returnDate">Return:</label>
-              <input
-                type="date"
-                id="returnDate"
-                name="returnDate"
-                value={formData.returnDate}
-                onChange={handleInputChange}
-                min={getMinReturnDate(formData.departureDate)}
-                required
-              />
-            </div>
+          <div className="form-group form-group--date">
+            <label htmlFor="returnDate">Return:</label>
+            <input
+              type="date"
+              id="returnDate"
+              name="returnDate"
+              value={formData.returnDate}
+              onChange={handleInputChange}
+              min={getMinReturnDate(formData.departureDate)}
+              required
+            />
+            {isSubmitted && errors.returnDate && (
+              <div className="error-message">{errors.returnDate}</div>
+            )}
           </div>
         </div>
 
@@ -154,13 +178,12 @@ const RefinementForm = ({ initialLocation }) => {
                   min={type.min}
                   max={type.max}
                 />
+                {isSubmitted && errors[type.name] && (
+                  <div className="error-message">{errors[type.name]}</div>
+                )}
               </div>
             ))}
           </div>
-          {/* Display passenger validation error if it pops up */}
-          {errors.passengers && (
-            <span className="error-message">{errors.passengers}</span>
-          )}
         </div>
       </div>
 
@@ -182,6 +205,9 @@ const RefinementForm = ({ initialLocation }) => {
               €{formData.priceRange[0]} - €{formData.priceRange[1]}
             </span>
           </div>
+          {isSubmitted && errors.priceRange && (
+            <div className="error-message">{errors.priceRange}</div>
+          )}
         </div>
       </div>
 

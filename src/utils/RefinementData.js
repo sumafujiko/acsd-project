@@ -1,3 +1,5 @@
+import * as yup from "yup";
+
 // Initial form data
 export const initialFormData = {
   location: "",
@@ -45,51 +47,57 @@ export const getMinReturnDate = (departureDate) => {
   return formatDate(nextDay);
 };
 
-// Validation function for dates
-export const validateDates = (departureDate, returnDate) => {
-  if (!departureDate || !returnDate) return true;
-  return new Date(returnDate) > new Date(departureDate);
-};
-
-// Validation function for passengers
-export const validatePassengers = (adults, children, infants) => {
-  const totalPassengers = adults + children + infants;
-
-  if (adults < MIN_ADULTS) {
-    return {
-      valid: false,
-      message: `There must be at least ${MIN_ADULTS} adult passenger.`,
-    };
-  }
-
-  if (totalPassengers > MAX_TOTAL_PASSENGERS) {
-    return {
-      valid: false,
-      message: `Total passengers cannot exceed ${MAX_TOTAL_PASSENGERS}.`,
-    };
-  }
-
-  if (infants > adults) {
-    return {
-      valid: false,
-      message: "The number of infants cannot exceed the number of adults.",
-    };
-  }
-
-  for (const type of passengerTypes) {
-    const count =
-      type.name === "adults"
-        ? adults
-        : type.name === "children"
-        ? children
-        : infants;
-    if (count < type.min || count > type.max) {
-      return {
-        valid: false,
-        message: `Invalid number of ${type.label.toLowerCase()}.`,
-      };
+// Yup schema for form validation
+export const refinementValidation = yup
+  .object()
+  .shape({
+    location: yup.string().required("City is required"),
+    departureDate: yup
+      .date()
+      .min(getMinDepartureDate(), "Departure date cannot be in the past")
+      .required("Departure date is required"),
+    returnDate: yup
+      .date()
+      .min(yup.ref("departureDate"), "Return date must be after departure date")
+      .required("Return date is required"),
+    adults: yup
+      .number()
+      .min(MIN_ADULTS, `There must be at least ${MIN_ADULTS} adult passenger`)
+      .max(9, "Maximum 9 adults allowed")
+      .required("Number of adults is required"),
+    children: yup
+      .number()
+      .min(0, "Number of children cannot be negative")
+      .max(8, "Maximum 8 children allowed")
+      .required("Number of children is required"),
+    infants: yup
+      .number()
+      .min(0, "Number of infants cannot be negative")
+      .max(4, "Maximum 4 infants allowed")
+      .required("Number of infants is required"),
+    priceRange: yup
+      .array()
+      .of(yup.number())
+      .length(2, "Price range must have two values")
+      .test(
+        "price-range",
+        "Invalid price range",
+        (value) =>
+          value[0] >= priceRangeConfig.min && value[1] <= priceRangeConfig.max
+      ),
+  })
+  .test(
+    "total-passengers",
+    `Total passengers cannot exceed ${MAX_TOTAL_PASSENGERS}`,
+    function (values) {
+      const totalPassengers = values.adults + values.children + values.infants;
+      return totalPassengers <= MAX_TOTAL_PASSENGERS;
     }
-  }
-
-  return { valid: true };
-};
+  )
+  .test(
+    "infants-adults",
+    "The number of infants cannot exceed the number of adults",
+    function (values) {
+      return values.infants <= values.adults;
+    }
+  );
