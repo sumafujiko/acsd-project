@@ -202,7 +202,9 @@ const TransportPage = () => {
         />
       )}
       <div className="transport-tips">
-        <TransportTips />
+        <div class="transport-tips-container">
+          <TransportTips />
+        </div>
       </div>
     </div>
   );

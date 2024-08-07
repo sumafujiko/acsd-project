@@ -52,9 +52,12 @@
   }
 
   .transport-tips {
-    background-color: #f8f9fa;
+    background-color: $secondary-color;
     padding: 15px;
     border-radius: 4px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 
     h2 {
       margin-bottom: 10px;

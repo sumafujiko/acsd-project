@@ -20,11 +20,6 @@ const Navbar = () => {
               Book Flights
             </Link>
           </li>
-          <li className="navbar__item">
-            <Link to="/transport" className="navbar__link">
-              Transport
-            </Link>
-          </li>
         </ul>
       </div>
     </nav>
