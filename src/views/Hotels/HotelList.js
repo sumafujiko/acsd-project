@@ -3,8 +3,6 @@ import HotelCard from "./HotelCard";
 import { toTitleCase } from "../../utils/stringUtils";
 
 const HotelList = ({ hotels, onSelect }) => {
-  console.log("Hotels in HotelList:", hotels);
-
   if (!hotels || hotels.length === 0) {
     return (
       <div className="hotel-list__empty">

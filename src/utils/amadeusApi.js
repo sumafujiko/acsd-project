@@ -49,7 +49,6 @@ export const searchHotels = async (cityCode, checkInDate) => {
   try {
     const token = await getAccessToken();
 
-    console.log("Fetching hotel list for city:", cityCode);
     const hotelListResponse = await amadeus.get(
       "/v1/reference-data/locations/hotels/by-city",
       {
@@ -64,7 +63,6 @@ export const searchHotels = async (cityCode, checkInDate) => {
     );
 
     const hotels = hotelListResponse.data.data;
-    console.log("Found hotels:", hotels.length);
 
     // Process hotels without fetching offers
     const processedHotels = hotels.slice(0, 6).map((hotel) => ({
@@ -88,7 +86,6 @@ export const searchHotels = async (cityCode, checkInDate) => {
       ],
     }));
 
-    console.log("Processed hotels:", processedHotels);
     return processedHotels;
   } catch (error) {
     console.error("Error searching hotels:", error);

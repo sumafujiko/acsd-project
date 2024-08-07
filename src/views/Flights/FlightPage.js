@@ -1,5 +1,4 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
-import axios from "axios";
 import parseFlight from "./parseFlight";
 import FlightDetails from "../../components/FlightDetails/FlightDetails";
 
@@ -7,9 +6,10 @@ import "../../sass/flightDetails.scss";
 import { useLocation } from "react-router-dom";
 import iataCodes from "./iataCodes";
 import FlightDetailsSorter from "../../components/FlightDetails/FlightDetailsSorter";
+import { getFlights, safeApiCall } from "../../api/amadeusApi";
 
-const API_KEY = process.env.REACT_APP_AMADEUS_API_KEY;
-const API_SECRET = process.env.REACT_APP_AMADEUS_API_SECRET;
+// const API_KEY = process.env.REACT_APP_AMADEUS_API_KEY;
+// const API_SECRET = process.env.REACT_APP_AMADEUS_API_SECRET;
 
 const FlightPage = () => {
   const [loading, setLoading] = useState(false);
@@ -51,38 +51,8 @@ const FlightPage = () => {
     setLoading(true);
     setError("");
     try {
-      //we first have to authenticate ourselves with Amadeus.
-      // I had thought about storing this token however storing this in the client
-      // might leave us open to xss attacks
-      const tokenResponse = await axios.post(
-        "https://test.api.amadeus.com/v1/security/oauth2/token",
-        {
-          grant_type: "client_credentials",
-          client_id: API_KEY,
-          client_secret: API_SECRET,
-        },
-        {
-          headers: {
-            "Content-Type": "application/x-www-form-urlencoded",
-          },
-          signal: abortController.signal,
-        }
-      );
+      const response = await safeApiCall(getFlights, params);
 
-      if (!tokenResponse.data?.access_token) {
-        throw new Error("No Access Token");
-      }
-
-      const response = await axios.get(
-        "https://test.api.amadeus.com/v2/shopping/flight-offers",
-        {
-          headers: {
-            Authorization: `Bearer ${tokenResponse.data.access_token}`,
-          },
-          signal: abortController.signal,
-          params,
-        }
-      );
       const data = response.data?.data;
       if (!Array.isArray(data)) {
         throw new Error("Parsing Error");

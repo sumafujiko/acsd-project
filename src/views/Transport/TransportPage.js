@@ -56,7 +56,16 @@ const TransportPage = () => {
     setError(null);
     try {
       const results = await safeApiCall(searchTransfers, searchParams);
-      setSearchResults(results);
+      const parsedResults = await results.data?.map((result) => ({
+        price: result?.converted?.monetaryAmount,
+        start: result?.start?.dateTime,
+        vehicle: result?.vehicle.code,
+        vehicleDesc: result?.vehicle.description,
+      }));
+      console.log(parsedResults, "PARSED RESULTS");
+      setSearchResults(parsedResults ?? []);
+
+      console.log(results, "RESULTS FROM handle search results");
     } catch (error) {
       setError("Failed to fetch transfer options. Please try again.");
       console.error("Search transfers error:", error);
@@ -64,6 +73,19 @@ const TransportPage = () => {
       setIsLoading(false);
     }
   };
+
+  useEffect(() => {
+    const searchParams = {
+      startLocationCode: tripCart.flight?.outboundFlight[0]?.arrivalAirport,
+      endLatitude: tripCart.hotel?.latitude,
+      endLongitude: tripCart.hotel?.longitude,
+      startDateTime: tripCart.flight?.outboundFlight[0]?.arrivalAt,
+      passengerQuantity:
+        tripCart.adults || 1 + tripCart.children || 0 + tripCart.infants || 0,
+    };
+    console.log(searchParams, "search Params");
+    handleSearchResults(searchParams);
+  }, [tripCart]);
 
   /**
    * Handles the selection of a transfer option
@@ -114,22 +136,6 @@ const TransportPage = () => {
       setIsLoading(false);
     }
   };
-  // Console log the state passed via navigation
-  useEffect(() => {
-    // Log the state passed via navigation
-    console.log(
-      "Booking details passed via state:",
-      location.state?.bookingDetails
-    );
-
-    // Log the entire tripCart
-    console.log("Current tripCart:", tripCart);
-
-    // If you want to log specific details:
-    console.log("Flight details:", tripCart.flight);
-    console.log("Hotel details:", tripCart.hotel);
-    console.log("Stay duration:", tripCart.stayDuration);
-  }, [location, tripCart]);
 
   return (
     <div className="transport-page">
