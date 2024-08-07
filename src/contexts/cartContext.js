@@ -11,4 +11,4 @@ export const CartContextProvider = ({ children }) => {
   );
 };
 
-export const useCartContext = () => useContext(CartContext); // Was getting runtime errors without this
+export const useCartContext = () => useContext(CartContext);

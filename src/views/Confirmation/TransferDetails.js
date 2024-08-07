@@ -1,15 +1,17 @@
-import React from 'react';
+import React from "react";
 
 const TransferDetails = ({ transfer }) => {
   return (
     <div className="transfer-details">
-      <p><strong>From:</strong> {transfer.origin}</p>
-      <p><strong>To:</strong> {transfer.destination}</p>
-      <p><strong>Date:</strong> {transfer.date}</p>
-      <p><strong>Time:</strong> {transfer.time}</p>
-      <p><strong>Passengers:</strong> {transfer.passengers}</p>
-      <p><strong>Transfer Type:</strong> {transfer.type}</p>
-      <p><strong>Price:</strong> ${transfer.price}</p>
+      <p>
+        <strong>Transport Type:</strong> {transfer.vehicleType}
+      </p>
+      <p>
+        <strong>Vehicle Desc:</strong> {transfer.vehicleDesc}
+      </p>
+      <p>
+        <strong>Price:</strong> ${transfer.price * 10}
+      </p>
     </div>
   );
 };

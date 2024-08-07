@@ -10,13 +10,15 @@ import cardValidation from "./paymentValidation";
 const PaymentPage = () => {
   const { tripCart } = useContext(CartContext);
   const [cardDetails, setCardDetails] = useState({});
-  const [errors, setErrors] = useState({ fullName: "Something" });
+  const [errors, setErrors] = useState({});
   const navigate = useNavigate();
 
-  const flightPrice = tripCart.flight?.price ?? 100;
-  const hotelPrice = tripCart.flight?.price ?? 100;
-  const tranferPrice = tripCart.flight?.price ?? 100;
-  const totalPrice = flightPrice + tranferPrice + hotelPrice;
+  console.log(tripCart, "tripcart");
+
+  const flightPrice = parseInt(tripCart.flight?.price);
+  const hotelPrice = parseInt(tripCart.hotel?.price);
+  const tranferPrice = parseInt(tripCart.transfer?.price);
+  const totalPrice = parseInt(flightPrice + tranferPrice) + hotelPrice;
 
   const handleChange = (e) => {
     e.preventDefault();
