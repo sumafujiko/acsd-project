@@ -49,33 +49,13 @@ const TransferResults = ({ results, onSelect }) => {
 };
 
 // PropTypes for type checking
-// TransferResults.propTypes = {
-//   results: PropTypes.arrayOf(PropTypes.shape({
-//     id: PropTypes.string,
-//     transferType: PropTypes.string.isRequired,
-//     start: PropTypes.shape({
-//       locationName: PropTypes.string.isRequired
-//     }).isRequired,
-//     end: PropTypes.shape({
-//       locationName: PropTypes.string.isRequired
-//     }).isRequired,
-//     startDateTime: PropTypes.string.isRequired,
-//     pricing: PropTypes.shape({
-//       totalPrice: PropTypes.number.isRequired,
-//       currency: PropTypes.string.isRequired
-//     }).isRequired
-//   })).isRequired,
-//   onSelect: PropTypes.func.isRequired
-// };
-
-// PropTypes for type checking
 TransferResults.propTypes = {
   results: PropTypes.arrayOf(
     PropTypes.shape({
-      price: PropTypes.number, // Assuming monetaryAmount is a number
-      start: PropTypes.string, // Assuming dateTime is a string
-      vehicle: PropTypes.string, // Assuming code is a string
-      vehicleDesc: PropTypes.string, // Assuming description is a string
+      price: PropTypes.number,
+      start: PropTypes.string,
+      vehicle: PropTypes.string,
+      vehicleDesc: PropTypes.string,
     })
   ).isRequired,
   onSelect: PropTypes.func.isRequired,

@@ -1,11 +1,10 @@
-
-import React from 'react';
-import PropTypes from 'prop-types';
-import '../../sass/PriceBreakdown.scss'; 
+import React from "react";
+import PropTypes from "prop-types";
+import "../../sass/PriceBreakdown.scss";
 
 /**
  * PriceBreakdown Component
- * 
+ *
  * This component displays a detailed breakdown of prices for flight, hotel, and transfer bookings.
  * It calculates the total price and shows individual prices for each service.
  *
@@ -19,7 +18,7 @@ const PriceBreakdown = ({ flightData, hotelData, transferData }) => {
   const flightPrice = flightData?.price || 0;
   const hotelPrice = hotelData?.price || 0;
   const transferPrice = transferData?.price || 0;
-
+  console.log(flightPrice, hotelPrice, transferPrice);
   // Calculate total price
   const totalPrice = flightPrice + hotelPrice + transferPrice;
 
@@ -28,7 +27,15 @@ const PriceBreakdown = ({ flightData, hotelData, transferData }) => {
    * @param {number} price - The price to format
    * @returns {string} Formatted price string
    */
-  const formatPrice = (price) => `$${price.toFixed(2)}`;
+  const formatPrice = (price) => {
+    if (typeof price === "number") {
+      return `$${price.toFixed(2)}`;
+    } else if (typeof price === "string") {
+      return `${parseFloat(price).toFixed(2)}`;
+    } else {
+      return "0";
+    }
+  };
 
   /**
    * Renders a price item if the data is available
@@ -50,13 +57,15 @@ const PriceBreakdown = ({ flightData, hotelData, transferData }) => {
     <div className="price-breakdown">
       <h2 className="price-breakdown__title">Price Breakdown</h2>
       <ul className="price-breakdown__list">
-        {renderPriceItem('Flight', flightPrice)}
-        {renderPriceItem('Hotel', hotelPrice, hotelData)}
-        {renderPriceItem('Transfer', transferPrice, transferData)}
+        {renderPriceItem("Flight", flightPrice)}
+        {renderPriceItem("Hotel", hotelPrice, hotelData)}
+        {renderPriceItem("Transfer", transferPrice, transferData)}
       </ul>
       <div className="price-breakdown__total">
         <span className="price-breakdown__total-label">Total</span>
-        <span className="price-breakdown__total-price">{formatPrice(totalPrice)}</span>
+        <span className="price-breakdown__total-price">
+          {formatPrice(totalPrice)}
+        </span>
       </div>
     </div>
   );
@@ -65,14 +74,14 @@ const PriceBreakdown = ({ flightData, hotelData, transferData }) => {
 // PropTypes for type checking
 PriceBreakdown.propTypes = {
   flightData: PropTypes.shape({
-    price: PropTypes.number
+    price: PropTypes.number,
   }),
   hotelData: PropTypes.shape({
-    price: PropTypes.number
+    price: PropTypes.number,
   }),
   transferData: PropTypes.shape({
-    price: PropTypes.number
-  })
+    price: PropTypes.number,
+  }),
 };
 
 export default PriceBreakdown;

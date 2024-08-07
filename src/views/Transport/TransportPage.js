@@ -18,7 +18,7 @@ import "../../sass/transport.scss";
  */
 const TransportPage = () => {
   const location = useLocation();
-  const { tripCart } = useCartContext();
+  const { tripCart, setTripCart } = useCartContext();
   const navigate = useNavigate();
   const { searchCriteria, selectedFlight } = location.state || {};
 
@@ -80,6 +80,8 @@ const TransportPage = () => {
   };
 
   useEffect(() => {
+    console.log(tripCart, "trip cart before doing search params");
+    console.log(location.state, "location.state");
     const searchParams = {
       startLocationCode: tripCart.flight?.outboundFlight[0]?.arrivalAirport,
       endLatitude: tripCart.hotel?.latitude,
@@ -96,7 +98,27 @@ const TransportPage = () => {
    * @param {Object} transfer - The selected transfer option
    */
   const handleSelectTransfer = (transfer) => {
-    setSelectedTransfer(transfer);
+    const { searchCriteria } = location.state;
+
+    const price =
+      (searchCriteria.adults ||
+        0 + searchCriteria.children ||
+        0 + searchCriteria.infant ||
+        0) *
+      transfer.price *
+      10;
+
+    setTripCart((prev) => ({
+      ...prev,
+      transfer: {
+        price,
+        startTime: transfer.start,
+        vehicleType: transfer.vehicle,
+        vehicleDesc: transfer.vehicleDesc,
+      },
+    }));
+    navigate("/payments");
+    // setSelectedTransfer(transfer);
   };
 
   /**
@@ -147,7 +169,7 @@ const TransportPage = () => {
 
       <TripSummary tripCart={tripCart} />
 
-      <TransferSearch
+      {/* <TransferSearch
         onSearchResults={handleSearchResults}
         initialData={{
           arrivalAirport: tripCart.flight?.outboundFlight[0]?.arrivalAirport,
@@ -160,7 +182,7 @@ const TransportPage = () => {
             infants: tripCart.infants || 0,
           },
         }}
-      />
+      /> */}
 
       {isLoading && <p>Loading...</p>}
 

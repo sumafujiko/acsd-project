@@ -1,13 +1,14 @@
 import React, { useEffect, useRef } from "react";
 import useHotelSearch from "./useHotelSearch";
 import { useCartContext } from "../../contexts/cartContext";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 const HotelDetails = ({ hotel, onBack }) => {
   const mapRef = useRef(null);
   const { tripCart, setTripCart } = useCartContext();
   const { stayDuration } = useHotelSearch(tripCart.flight);
   const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     if (hotel && hotel.hotel.latitude && hotel.hotel.longitude) {
@@ -82,7 +83,7 @@ const HotelDetails = ({ hotel, onBack }) => {
       dates: bookingDetails.dates,
     }));
 
-    navigate("/transport", { state: { bookingDetails } }); // For transport page
+    navigate("/transport", { state: location.state }); // For transport page
   };
 
   if (!hotel || !hotel.hotel) {

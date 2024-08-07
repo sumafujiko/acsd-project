@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useCartContext } from "../../contexts/cartContext";
 import useHotelSearch from "./useHotelSearch";
 import TripSummary from "../../contexts/TripSummary";
@@ -10,8 +10,11 @@ import "../../sass/hotelpage.scss";
 const HotelPage = () => {
   const { tripCart, setTripCart } = useCartContext();
   const navigate = useNavigate();
+  const location = useLocation();
   const { hotels, loading, error } = useHotelSearch(tripCart.flight);
   const [selectedHotel, setSelectedHotel] = useState(null);
+
+  console.log(location.state);
 
   // Handler for selecting a hotel
   const handleHotelSelect = (hotel) => {
@@ -26,7 +29,7 @@ const HotelPage = () => {
   // Handler for booking a hotel and proceeding to transport page
   const handleBookHotel = (hotel) => {
     setTripCart((prev) => ({ ...prev, hotel: hotel }));
-    navigate("/transport");
+    navigate("/transport", { state: "nothing" });
   };
 
   return (
