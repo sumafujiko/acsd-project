@@ -181,7 +181,7 @@ const TransportPage = () => {
         }}
       /> */}
 
-      {isLoading && <p>Loading...</p>}
+      {isLoading && <p className="loading-message">Loading...</p>}
 
       {error && <p className="error-message">{error}</p>}
 
