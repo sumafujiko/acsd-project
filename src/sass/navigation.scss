@@ -1,0 +1,111 @@
+@import "./global.scss";
+@import "./variables.scss";
+
+// Navbar styles
+.navbar {
+  width: 100%;
+  background-color: $primary-color;
+  color: $white;
+
+  &__container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: $spacing-medium;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  &__logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    text-decoration: none !important;
+    color: $white !important; //cant get this to be purple, will work on it later
+
+    &:visited,
+    &:active,
+    &:hover,
+    &:link {
+      color: $white !important;
+      text-decoration: none !important;
+    }
+  }
+
+  &__menu {
+    display: flex;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  &__item {
+    margin-left: $spacing-medium;
+  }
+
+  &__link {
+    text-decoration: none;
+    color: $white !important;
+    transition: color 0.3s ease;
+
+    &:visited,
+    &:active,
+    &:hover,
+    &:link {
+      color: $white !important;
+      text-decoration: none;
+    }
+
+    &:hover {
+      color: $accent-color !important;
+    }
+  }
+}
+
+// Footer styles
+.footer {
+  width: 100%;
+  background-color: $primary-color;
+  color: $white;
+  flex-shrink: 0;
+
+  &__container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: $spacing-medium;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  &__copyright {
+    font-size: 0.9rem;
+  }
+
+  a {
+    text-decoration: none;
+    color: $white !important;
+
+    &:visited,
+    &:active,
+    &:hover,
+    &:link {
+      color: $white !important;
+      text-decoration: none;
+    }
+
+    &:hover {
+      color: $accent-color !important;
+    }
+  }
+}
+
+// Layout styles to make the footer stick to the bottom
+.layout {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+
+  &__content {
+    flex: 1 0 auto;
+  }
+}

@@ -1,0 +1,259 @@
+@import "./variables";
+@import "./mixins";
+
+.landing-page {
+  overflow-x: hidden; // Prevent horizontal scrolling, this was happening when the browser was resized
+
+  &__hero {
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+  }
+
+  &__hero-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    width: 90%;
+    max-width: 1200px;
+  }
+
+  &__hero-slogan {
+    font-size: 5rem; // Increased size
+    color: $white;
+    margin-bottom: $spacing-xlarge;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  }
+
+  &__search-container {
+    width: 100%;
+    max-width: 800px;
+  }
+
+  &__search {
+    display: flex;
+    width: 100%;
+
+    input {
+      flex-grow: 1;
+      padding: $spacing-medium;
+      font-size: 1.2rem;
+      border: none;
+      border-radius: $border-radius 0 0 $border-radius;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    button {
+      padding: $spacing-medium $spacing-large;
+      font-size: 1.2rem;
+      border: none;
+      border-radius: 0 $border-radius $border-radius 0;
+      background-color: $accent-color;
+      color: $white;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+      &:hover {
+        background-color: darken($accent-color, 10%);
+      }
+    }
+  }
+
+  &__hero-credit {
+    position: absolute;
+    bottom: $spacing-small;
+    right: $spacing-small;
+    font-size: 0.8rem;
+    color: $white;
+    opacity: 0.7;
+  }
+
+  // Destinations section styles
+  &__destinations {
+    padding: $spacing-xlarge 0;
+    background-color: $secondary-color;
+
+    h2 {
+      @include container;
+      text-align: left;
+      margin-bottom: $spacing-large;
+      color: $white;
+      font-size: $spacing-xlarge;
+    }
+  }
+
+  &__destinations-grid {
+    @include container;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+
+  &__destination-card {
+    background-color: $white;
+    border-radius: $border-radius;
+    box-shadow: 0 2px 4px rgba($primary-color, 0.1);
+    margin-bottom: $spacing-large;
+    width: calc(33.33% - #{$spacing-medium});
+    overflow: hidden;
+  }
+
+  &__destination-image {
+    position: relative;
+
+    img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+    }
+
+    .image-credit {
+      @include image-credit;
+      font-size: 0.6rem;
+    }
+  }
+
+  &__destination-content {
+    padding: $spacing-medium;
+
+    h3 {
+      margin-top: 0;
+      margin-bottom: $spacing-small;
+      color: $primary-color;
+      font-size: 1.5rem;
+    }
+
+    p {
+      margin-bottom: $spacing-small;
+      color: $primary-color;
+      font-size: 1rem;
+    }
+  }
+
+  // Why Choose Us section styles
+  &__why-us {
+    padding: $spacing-xlarge 0;
+    background-color: $background-color;
+    color: $primary-color;
+  }
+
+  &__why-us-content {
+    @include container;
+    text-align: left;
+
+    h2 {
+      text-align: left;
+      margin-bottom: $spacing-large;
+      font-size: $spacing-xlarge;
+      color: $primary-color;
+    }
+
+    @mixin section-heading {
+      font-size: $spacing-xlarge;
+      text-align: left;
+      margin-bottom: $spacing-large;
+    }
+
+    ul {
+      list-style-type: none;
+      padding: 0;
+    }
+
+    li {
+      margin-bottom: $spacing-medium;
+      font-size: 1.1rem;
+    }
+  }
+}
+
+// Responsive adjustments
+@include responsive($breakpoint-mobile) {
+  .landing-page {
+    &__hero-slogan {
+      font-size: 3rem;
+      margin-bottom: $spacing-large;
+    }
+
+    &__search {
+      flex-direction: column;
+
+      input {
+        border-radius: $border-radius $border-radius 0 0;
+      }
+
+      button {
+        border-radius: 0 0 $border-radius $border-radius;
+        margin-top: $spacing-small;
+      }
+    }
+
+    // New responsive styles for destinations
+    &__destinations {
+      h2 {
+        font-size: 2.5rem;
+        text-align: center;
+      }
+    }
+
+    &__destinations-grid {
+      flex-direction: column;
+      align-items: center;
+    }
+
+    &__destination-card {
+      width: 90%;
+      max-width: 400px;
+    }
+
+    &__destination-content {
+      h3 {
+        font-size: 1.3rem;
+      }
+
+      p {
+        font-size: 0.9rem;
+      }
+    }
+  }
+}
+
+// Medium-sized screens
+@media (min-width: $breakpoint-mobile) and (max-width: 1024px) {
+  .landing-page {
+    &__destinations {
+      h2 {
+        font-size: 3rem;
+      }
+    }
+
+    &__destinations-grid {
+      justify-content: center;
+    }
+
+    &__destination-card {
+      width: calc(50% - #{$spacing-medium});
+      max-width: 350px;
+    }
+  }
+}
+
+// Large screens
+@media (min-width: 1025px) {
+  .landing-page {
+    &__destinations {
+      h2 {
+        font-size: $spacing-xlarge;
+      }
+    }
+
+    &__destination-card {
+      width: calc(33.33% - #{$spacing-medium});
+    }
+  }
+}

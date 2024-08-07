@@ -1,0 +1,65 @@
+@import "variables";
+
+.transfer-results {
+  color: $primary-color;
+  &__title {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    text-align: center;
+    color: $white;
+  }
+
+  &__list {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-bottom: 2rem;
+  }
+
+  .transfer-option {
+    padding: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    width: 40%;
+
+    &:hover {
+      background-color: #e9e9e9;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    &__type {
+      font-size: 1.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    &__detail {
+      font-size: 1rem;
+      margin-bottom: 0.5rem;
+    }
+
+    &__price {
+      font-size: 1.2rem;
+      font-weight: bold;
+      margin-bottom: 1rem;
+    }
+
+    &__select-btn {
+      display: inline-block;
+      padding: 0.5rem 1rem;
+      font-size: 1rem;
+      background-color: #007bff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+
+      &:hover {
+        background-color: #0056b3;
+      }
+    }
+  }
+}

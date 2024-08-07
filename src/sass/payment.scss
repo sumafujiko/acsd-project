@@ -1,0 +1,113 @@
+@import "variables";
+@import "mixins";
+
+.payment {
+  display: flex;
+  height: calc(100vh - 8rem);
+  &-details {
+    &__container {
+      width: 40%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      background-image: linear-gradient(
+          to bottom,
+          rgba(0, 0, 0, 0.6),
+          rgba(0, 0, 0, 0.6)
+        ),
+        url("../images/landing-hero-background.jpg");
+    }
+
+    &__itemiser-container {
+      width: 70%;
+      height: 20rem;
+      background-color: $white;
+      transform: translate(25%);
+      border-radius: 0.6rem;
+      box-shadow: 0.4rem 0.4rem 2rem 0.1rem;
+      padding: 2rem;
+
+      h2 {
+        color: #444;
+      }
+
+      p {
+        background-color: $accent-color;
+        color: $white;
+        font-size: large;
+        padding: 0.5rem;
+        border-radius: 0.5rem;
+      }
+
+      &__total {
+        background-color: $primary-color;
+        padding: 0.8rem;
+        font-size: x-large;
+        border-radius: 0.5rem;
+        color: $white;
+        display: block;
+      }
+    }
+  }
+
+  &-card {
+    &__container {
+      @include flex-center;
+      flex-grow: 1;
+    }
+    &__form {
+      width: 50%;
+      max-width: 30rem;
+
+      button {
+        width: 100%;
+        background-color: $primary-color;
+        color: $white;
+        margin-top: 2rem;
+        padding: 1rem;
+        border: none;
+        font-size: x-large;
+        cursor: pointer;
+
+        &:hover {
+          filter: brightness(1.5);
+        }
+      }
+    }
+    &__form-control {
+      @include flex-column;
+      label {
+        color: #444;
+        margin-bottom: 0.2rem;
+      }
+      input {
+        padding: 0.5rem;
+        border: 1px solid $secondary-color;
+        border-radius: 4px;
+        font-size: 1rem;
+      }
+    }
+
+    &__small-inputs {
+      display: flex;
+      justify-content: space-between;
+
+      &__div {
+        gap: 1rem;
+      }
+    }
+
+    &__expiry {
+      display: flex;
+      gap: 1rem;
+      input {
+        width: 5rem;
+      }
+    }
+  }
+  &__error {
+    color: $error;
+    margin-top: 0.3rem;
+  }
+}
