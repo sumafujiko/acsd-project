@@ -9,8 +9,10 @@ const FlightDetails = ({ flightDetail }) => {
   const navigate = useNavigate();
   const location = useLocation();
 
+  //this is the information that is passed through useNavigate in the state
   const userSelection = location.state;
 
+  //update our cart context.  We dont want to overwrite previous information so spread details
   const handleSelect = () => {
     setTripCart((prev) => ({
       ...prev,
@@ -24,6 +26,7 @@ const FlightDetails = ({ flightDetail }) => {
       <p className="flight-details__price">Price: €{flightDetail.price}</p>
       <p className="flight-details__inbound-outbound">Outbound</p>
       <div className="flight-details__container-flight">
+        {/* Iterate over our outbound segements for outbound */}
         {flightDetail.outboundFlight.map((segment, index) => (
           <FlightSegment flightSegment={segment} key={index} />
         ))}
@@ -31,6 +34,7 @@ const FlightDetails = ({ flightDetail }) => {
       {flightDetail.returnFlight && (
         <p className="flight-details__inbound-outbound">Return</p>
       )}
+      {/* And again for the return flight */}
       {flightDetail.returnFlight && (
         <div className="flight-details__container-flight">
           {flightDetail.returnFlight.map((segment, index) => (
