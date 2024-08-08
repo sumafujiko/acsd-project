@@ -65,7 +65,6 @@ export const searchTransfers = async (searchCriteria) => {
     "/v1/shopping/transfer-offers",
     searchCriteria
   );
-  console.log(response, "response inside search transfers");
   return response.data;
 };
 

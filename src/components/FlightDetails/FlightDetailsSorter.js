@@ -1,5 +1,11 @@
 import { useState } from "react";
 
+import {
+  filterByAirport,
+  filterByMaxLayover,
+  sortByPrice,
+} from "./flightDetailsArrayHelpers";
+
 import "../../sass/flightDetails.scss";
 
 const FlightDetailsSorter = ({ originalData, setFlights }) => {
@@ -18,48 +24,6 @@ const FlightDetailsSorter = ({ originalData, setFlights }) => {
       //as sum will return null, filter these out
       .filter((airport) => airport !== null && airport !== undefined)
   );
-
-  const filterByAirport = (userSelection, flightsToFilter) => {
-    const airport = userSelection.airportSelect;
-    //filter any airport that does not match
-    if (!airport) return flightsToFilter;
-    const filteredFlights = flightsToFilter.filter(
-      (trip) =>
-        trip.outboundFlight.slice(-1)[0].arrivalAirport === airport &&
-        (trip.returnFlight && trip.returnFlight[0].departureAirport) === airport
-    );
-    return filteredFlights;
-  };
-
-  const filterByMaxLayover = (userSelection, flightsToFilter) => {
-    const maxLayover = userSelection.maxLayover;
-    if (!maxLayover) return flightsToFilter;
-
-    //filter out any flights have more segments / layovers than mentioned
-    const filteredFlights = flightsToFilter.filter((trip) => {
-      const outboundLayovers = trip.outboundFlight.length;
-      //return flight could be null so leave at 0
-      const returnLayovers = trip.returnFlight?.length
-        ? trip.returnFlight.length
-        : 0;
-      return (
-        outboundLayovers <= maxLayover + 1 && returnLayovers <= maxLayover + 1
-      );
-    });
-    return filteredFlights;
-  };
-
-  const sortByPrice = (userSelection, flightsToSort) => {
-    const value = userSelection.priceSort;
-    if (!value) return flightsToSort;
-    if (value === "asc") {
-      //simple sorting function based on price
-      return flightsToSort.sort((a, b) => a.price - b.price);
-    } else {
-      //reverse sorting function for desc
-      return flightsToSort.sort((a, b) => b.price - a.price);
-    }
-  };
 
   //we take the original data and pass this to this as filtered data will cause information loss
   //we need to perform all three actions on the data set every time any one of them is changed otherwise we are
@@ -87,6 +51,7 @@ const FlightDetailsSorter = ({ originalData, setFlights }) => {
             onChange={handleUserSelection}
           >
             <option value="">None Selected</option>
+            {/* dynamically create options from the airport set */}
             {Array.from(airportSet).map((airport) => (
               <option value={airport} key={airport}>
                 {airport}

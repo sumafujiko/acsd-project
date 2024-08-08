@@ -13,6 +13,7 @@ const PaymentPage = () => {
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
 
+  //convert from strings to numbers
   const flightPrice = parseFloat(tripCart.flight?.price);
   const hotelPrice = parseFloat(tripCart.hotel?.price);
   const tranferPrice = parseFloat(tripCart.transfer?.price);
@@ -21,7 +22,8 @@ const PaymentPage = () => {
   const handleChange = (e) => {
     e.preventDefault();
     const { value, type, maxLength, name } = e.target;
-
+    //this is a workaround for number inputs not being able to have a max digit length.
+    //convert the value to a string and check the length against maxLength prop
     if (type === "number" && value.toString().length > maxLength) {
       return;
     }
@@ -31,14 +33,14 @@ const PaymentPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    //this will validate and set errors dynamically into the errors object
     const validateResult = await handleYupValidation(
       cardDetails,
       cardValidation,
       setErrors
     );
     if (!validateResult) return;
-
+    //would have created some manner of toast alert if there was more time
     alert("Succcessfully Purchased");
     navigate("/confirmation");
   };
@@ -46,6 +48,7 @@ const PaymentPage = () => {
   return (
     <section className="payment">
       <div className="payment-details__container">
+        {/* Items Details */}
         <div className="payment-details__itemiser-container">
           <h2>Items Breakdown</h2>
           <p>Flight: €{flightPrice.toFixed(2)}</p>
@@ -56,6 +59,7 @@ const PaymentPage = () => {
           </span>
         </div>
       </div>
+      {/* Payment form */}
       <div className="payment-card__container">
         <form className="payment-card__form" onSubmit={handleSubmit}>
           <div className="payment-card__form-control">

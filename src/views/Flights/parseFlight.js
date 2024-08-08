@@ -7,6 +7,16 @@ const segmentParseKeys = {
   arrivalAt: "arrival.at",
   airline: "carrierCode",
 };
+//abstracted out  This pulls specific values out of each segment so that we are only dealing with a more flattened structure
+const parseSegments = (segments) => {
+  return segments.map((segment) => {
+    const segmentObj = {};
+    Object.entries(segmentParseKeys).forEach(
+      ([key, value]) => (segmentObj[key] = getNestedKeyValue(segment, value))
+    );
+    return segmentObj;
+  });
+};
 
 const parseFlight = (flightDetails) => {
   if (!flightDetails) return;
@@ -26,25 +36,13 @@ const parseFlight = (flightDetails) => {
 
   //each flight can have potentially multiple legs of the journey aka DUB -> NY = Dublin to London, London to New York
   if (Array.isArray(outboundItinerary?.segments)) {
-    const outboundFlight = outboundItinerary.segments.map((segment) => {
-      const segmentObj = {};
-      Object.entries(segmentParseKeys).forEach(
-        ([key, value]) => (segmentObj[key] = getNestedKeyValue(segment, value))
-      );
-      return segmentObj;
-    });
-    mappedFlightObject.outboundFlight = outboundFlight;
+    mappedFlightObject.outboundFlight = parseSegments(
+      outboundItinerary.segments
+    );
   }
-  // TODO Extract the same functionality as these repeat
+  //attach our return segments to the object
   if (Array.isArray(returnItinerary?.segments)) {
-    const returnFlight = returnItinerary.segments.map((segment) => {
-      const segmentObj = {};
-      Object.entries(segmentParseKeys).forEach(
-        ([key, value]) => (segmentObj[key] = getNestedKeyValue(segment, value))
-      );
-      return segmentObj;
-    });
-    mappedFlightObject.returnFlight = returnFlight;
+    mappedFlightObject.returnFlight = parseSegments(returnItinerary.segments);
   }
 
   return mappedFlightObject;

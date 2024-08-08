@@ -2,6 +2,7 @@ const FlightSegment = ({ flightSegment }) => {
   const departureDateTime = new Date(flightSegment.departureAt);
   const arrivalDateTime = new Date(flightSegment.arrivalAt);
 
+  //time from start of first leg to end of last leg
   const totalTime = calcTimeInHours(arrivalDateTime, departureDateTime);
 
   return (
@@ -10,10 +11,12 @@ const FlightSegment = ({ flightSegment }) => {
         <p className="flight-segment__airport">
           {flightSegment.departureAirport}
         </p>
+        {/* Keep time in date format until we are putting it into the html */}
         <p className="flight-segment__date">
           {departureDateTime.getDate()}/{departureDateTime.getMonth() + 1}/
           {departureDateTime.getFullYear()}
         </p>
+        {/* Keep it as two digits whether its below 10 or not */}
         <p className="flight-segment__time">
           {departureDateTime.getHours().toString().padStart(2, "0")}:
           {departureDateTime.getMinutes().toString().padStart(2, "0")}

@@ -1,5 +1,6 @@
 import * as yup from "yup";
 
+// simple Yup validation object.  We can chain different checks together and pass error messages to these failure state
 const cardValidation = yup.object({
   fullName: yup
     .string()
@@ -14,9 +15,11 @@ const cardValidation = yup.object({
       "Must be 12 digits",
       (val) => val && val.toString().padStart(2, "0").length === 12
     ),
+  //there is no explicit check to see whether a number 2 digits so have to do a custom test
   expMonth: yup
     .number()
     .required("Expiry Month is required")
+    //pad start as converting to string will change 01 to a 1
     .test(
       "length",
       "Exp Month Must be 2 digits",
@@ -39,7 +42,7 @@ const cardValidation = yup.object({
     .required("CVC is required")
     .test(
       "length",
-      "Must be 12 digits",
+      "Must be 3 digits",
       (val) => val && val.toString().length === 3
     ),
 });
